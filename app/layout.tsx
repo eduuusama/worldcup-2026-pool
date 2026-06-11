@@ -12,7 +12,7 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: "Gran Quinela Mundialista 2026",
-  description: "World Cup 2026 prediction pool — leaderboard & player picks · RMP / PEYTIO",
+  description: "World Cup 2026 prediction pool — leaderboard & player picks · RMP / PEYITO",
 };
 
 export default function RootLayout({

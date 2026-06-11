@@ -4,7 +4,7 @@ A World Cup 2026 prediction pool (1 / X / 2) for friends — leaderboard + per-p
 profile pages, bilingual (ES/EN), with match results that auto-update from the internet.
 
 - **Format:** each player predicts every group-stage match — `1` (first team wins),
-  `X` (draw), `2` (second team wins). **1 point per correct pick.**
+  `X` (draw), `2` (second team wins). **10 points per correct pick.**
 - **No database.** Predictions and results live as data files; the leaderboard is computed.
 - **Stack:** Next.js (App Router) + TypeScript + Tailwind v4. Deploys to Vercel.
 
@@ -15,9 +15,14 @@ profile pages, bilingual (ES/EN), with match results that auto-update from the i
    (Or type the name into the "Your Name:" header cell; that wins over the filename.)
 3. Commit + push (or redeploy). The build parses every `.xlsx` automatically.
 
-The importer detects columns by their headers (`#`, `Grp`, `Match`, `Your Name:`), so it
-works whether the file was saved from Excel, Google Sheets, or Numbers, and with ES or EN
-headers. It resolves each match by the **teams that played**, not the row order.
+The importer detects columns by their headers (`#`, `Grp`/`Group`, `Match`, `Your Name:`),
+so it works whether the file was saved from Excel, Google Sheets, or Numbers, and with ES
+or EN headers. It resolves each match by the **teams that played**, not the row order.
+
+**Multi-player tracker files also work:** a sheet with an `Official Result` column followed
+by one named column per player (like `WorldCup2026_Challenge_Tracker.xlsx`) imports every
+player at once. Outcomes in the Official Result column seed `results.json` for matches the
+auto-updater hasn't recorded yet (the updater's results always take precedence).
 
 ```bash
 npm run import   # parse spreadsheets -> data/matches.json + data/predictions.json

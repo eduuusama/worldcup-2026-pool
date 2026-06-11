@@ -7,8 +7,8 @@ type Dict = Record<string, string>;
 
 const MESSAGES: Record<Lang, Dict> = {
   es: {
-    subtitle: "RMP / PEYTIO",
-    legend: "1 = gana el primero · X = empate · 2 = gana el segundo",
+    subtitle: "RMP / PEYITO",
+    legend: "1 = gana el primero · X = empate · 2 = gana el segundo · 10 pts por acierto",
     nav_leaderboard: "Tabla",
     nav_matches: "Partidos",
     leaderboard_title: "Tabla de Posiciones",
@@ -43,8 +43,8 @@ const MESSAGES: Record<Lang, Dict> = {
     no_pick: "—",
   },
   en: {
-    subtitle: "RMP / PEYTIO",
-    legend: "1 = first team wins · X = draw · 2 = second team wins",
+    subtitle: "RMP / PEYITO",
+    legend: "1 = first team wins · X = draw · 2 = second team wins · 10 pts per correct pick",
     nav_leaderboard: "Leaderboard",
     nav_matches: "Matches",
     leaderboard_title: "Leaderboard",

@@ -1,9 +1,12 @@
 import type { Match, Player, Results } from "./types";
 
+/** Official pool rule (from the tracker's Scoreboard sheet): 10 points per correct pick. */
+export const POINTS_PER_CORRECT = 10;
+
 export interface PlayerScore {
   slug: string;
   name: string;
-  points: number; // 1 per correct pick
+  points: number; // correct * POINTS_PER_CORRECT
   correct: number;
   wrong: number;
   played: number; // matches with a final result
@@ -30,7 +33,7 @@ export function scorePlayer(player: Player, matches: Match[], results: Results) 
     wrong: played - correct,
     pending: total - played,
     total,
-    points: correct,
+    points: correct * POINTS_PER_CORRECT,
     accuracy: played ? correct / played : 0,
   };
 }
