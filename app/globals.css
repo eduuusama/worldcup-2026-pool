@@ -1,26 +1,71 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --pitch-900: #07120d;
+  --pitch-800: #0a1a12;
+  --pitch-700: #0e2419;
+  --accent: #00d27a;
+  --accent-dim: #0b8f57;
+  --gold: #ffd24a;
+  --silver: #cbd5e1;
+  --bronze: #e0a26b;
+  --text: #e9f2ec;
+  --muted: #94a89e;
+  --line: rgba(255, 255, 255, 0.09);
+  --card: rgba(255, 255, 255, 0.035);
+  --card-hover: rgba(255, 255, 255, 0.06);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
+  --color-gold: var(--gold);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(1100px 600px at 50% -10%, rgba(0, 210, 122, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--pitch-900), var(--pitch-800) 40%, var(--pitch-900));
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.pill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+/* Pick / outcome badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 9px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line);
+}
+.badge-1 { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
+.badge-X { background: rgba(148, 163, 184, 0.16); color: #cbd5e1; }
+.badge-2 { background: rgba(251, 146, 60, 0.16); color: #fdba74; }
+.badge-empty { background: transparent; color: var(--muted); }
+
+.row-correct { background: rgba(0, 210, 122, 0.09); }
+.row-wrong { background: rgba(244, 63, 94, 0.07); }
+
+.tnum { font-variant-numeric: tabular-nums; }

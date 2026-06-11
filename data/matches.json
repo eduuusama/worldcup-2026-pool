@@ -1,0 +1,506 @@
+[
+  {
+    "id": 1,
+    "group": "A",
+    "teamA": "South Africa",
+    "teamB": "Mexico",
+    "date": "Jun 11"
+  },
+  {
+    "id": 2,
+    "group": "A",
+    "teamA": "Czech Republic",
+    "teamB": "South Korea",
+    "date": "Jun 12"
+  },
+  {
+    "id": 3,
+    "group": "A",
+    "teamA": "South Africa",
+    "teamB": "Czech Republic",
+    "date": "Jun 18"
+  },
+  {
+    "id": 4,
+    "group": "A",
+    "teamA": "South Korea",
+    "teamB": "Mexico",
+    "date": "Jun 19"
+  },
+  {
+    "id": 5,
+    "group": "A",
+    "teamA": "South Korea",
+    "teamB": "South Africa",
+    "date": "Jun 25"
+  },
+  {
+    "id": 6,
+    "group": "A",
+    "teamA": "Mexico",
+    "teamB": "Czech Republic",
+    "date": "Jun 25"
+  },
+  {
+    "id": 7,
+    "group": "B",
+    "teamA": "Bosnia-Herzegovina",
+    "teamB": "Canada",
+    "date": "Jun 12"
+  },
+  {
+    "id": 8,
+    "group": "B",
+    "teamA": "Switzerland",
+    "teamB": "Qatar",
+    "date": "Jun 13"
+  },
+  {
+    "id": 9,
+    "group": "B",
+    "teamA": "Bosnia-Herzegovina",
+    "teamB": "Switzerland",
+    "date": "Jun 18"
+  },
+  {
+    "id": 10,
+    "group": "B",
+    "teamA": "Qatar",
+    "teamB": "Canada",
+    "date": "Jun 18"
+  },
+  {
+    "id": 11,
+    "group": "B",
+    "teamA": "Canada",
+    "teamB": "Switzerland",
+    "date": "Jun 24"
+  },
+  {
+    "id": 12,
+    "group": "B",
+    "teamA": "Qatar",
+    "teamB": "Bosnia-Herzegovina",
+    "date": "Jun 24"
+  },
+  {
+    "id": 13,
+    "group": "C",
+    "teamA": "Morocco",
+    "teamB": "Brazil",
+    "date": "Jun 13"
+  },
+  {
+    "id": 14,
+    "group": "C",
+    "teamA": "Scotland",
+    "teamB": "Haiti",
+    "date": "Jun 14"
+  },
+  {
+    "id": 15,
+    "group": "C",
+    "teamA": "Morocco",
+    "teamB": "Scotland",
+    "date": "Jun 19"
+  },
+  {
+    "id": 16,
+    "group": "C",
+    "teamA": "Haiti",
+    "teamB": "Brazil",
+    "date": "Jun 20"
+  },
+  {
+    "id": 17,
+    "group": "C",
+    "teamA": "Brazil",
+    "teamB": "Scotland",
+    "date": "Jun 24"
+  },
+  {
+    "id": 18,
+    "group": "C",
+    "teamA": "Haiti",
+    "teamB": "Morocco",
+    "date": "Jun 24"
+  },
+  {
+    "id": 19,
+    "group": "D",
+    "teamA": "Paraguay",
+    "teamB": "USA",
+    "date": "Jun 13"
+  },
+  {
+    "id": 20,
+    "group": "D",
+    "teamA": "Turkey",
+    "teamB": "Australia",
+    "date": "Jun 14"
+  },
+  {
+    "id": 21,
+    "group": "D",
+    "teamA": "Australia",
+    "teamB": "USA",
+    "date": "Jun 19"
+  },
+  {
+    "id": 22,
+    "group": "D",
+    "teamA": "Paraguay",
+    "teamB": "Turkey",
+    "date": "Jun 20"
+  },
+  {
+    "id": 23,
+    "group": "D",
+    "teamA": "USA",
+    "teamB": "Turkey",
+    "date": "Jun 26"
+  },
+  {
+    "id": 24,
+    "group": "D",
+    "teamA": "Australia",
+    "teamB": "Paraguay",
+    "date": "Jun 26"
+  },
+  {
+    "id": 25,
+    "group": "E",
+    "teamA": "Germany",
+    "teamB": "Curaçao",
+    "date": "Jun 14"
+  },
+  {
+    "id": 26,
+    "group": "E",
+    "teamA": "Ecuador",
+    "teamB": "Ivory Coast",
+    "date": "Jun 14"
+  },
+  {
+    "id": 27,
+    "group": "E",
+    "teamA": "Ivory Coast",
+    "teamB": "Germany",
+    "date": "Jun 20"
+  },
+  {
+    "id": 28,
+    "group": "E",
+    "teamA": "Curaçao",
+    "teamB": "Ecuador",
+    "date": "Jun 21"
+  },
+  {
+    "id": 29,
+    "group": "E",
+    "teamA": "Germany",
+    "teamB": "Ecuador",
+    "date": "Jun 25"
+  },
+  {
+    "id": 30,
+    "group": "E",
+    "teamA": "Ivory Coast",
+    "teamB": "Curaçao",
+    "date": "Jun 25"
+  },
+  {
+    "id": 31,
+    "group": "F",
+    "teamA": "Japan",
+    "teamB": "Netherlands",
+    "date": "Jun 14"
+  },
+  {
+    "id": 32,
+    "group": "F",
+    "teamA": "Tunisia",
+    "teamB": "Sweden",
+    "date": "Jun 15"
+  },
+  {
+    "id": 33,
+    "group": "F",
+    "teamA": "Sweden",
+    "teamB": "Netherlands",
+    "date": "Jun 20"
+  },
+  {
+    "id": 34,
+    "group": "F",
+    "teamA": "Japan",
+    "teamB": "Tunisia",
+    "date": "Jun 21"
+  },
+  {
+    "id": 35,
+    "group": "F",
+    "teamA": "Netherlands",
+    "teamB": "Tunisia",
+    "date": "Jun 25"
+  },
+  {
+    "id": 36,
+    "group": "F",
+    "teamA": "Sweden",
+    "teamB": "Japan",
+    "date": "Jun 25"
+  },
+  {
+    "id": 37,
+    "group": "G",
+    "teamA": "Egypt",
+    "teamB": "Belgium",
+    "date": "Jun 15"
+  },
+  {
+    "id": 38,
+    "group": "G",
+    "teamA": "New Zealand",
+    "teamB": "Iran",
+    "date": "Jun 16"
+  },
+  {
+    "id": 39,
+    "group": "G",
+    "teamA": "Iran",
+    "teamB": "Belgium",
+    "date": "Jun 21"
+  },
+  {
+    "id": 40,
+    "group": "G",
+    "teamA": "Egypt",
+    "teamB": "New Zealand",
+    "date": "Jun 22"
+  },
+  {
+    "id": 41,
+    "group": "G",
+    "teamA": "Belgium",
+    "teamB": "New Zealand",
+    "date": "Jun 27"
+  },
+  {
+    "id": 42,
+    "group": "G",
+    "teamA": "Iran",
+    "teamB": "Egypt",
+    "date": "Jun 27"
+  },
+  {
+    "id": 43,
+    "group": "H",
+    "teamA": "Cape Verde",
+    "teamB": "Spain",
+    "date": "Jun 15"
+  },
+  {
+    "id": 44,
+    "group": "H",
+    "teamA": "Uruguay",
+    "teamB": "Saudi Arabia",
+    "date": "Jun 15"
+  },
+  {
+    "id": 45,
+    "group": "H",
+    "teamA": "Saudi Arabia",
+    "teamB": "Spain",
+    "date": "Jun 21"
+  },
+  {
+    "id": 46,
+    "group": "H",
+    "teamA": "Cape Verde",
+    "teamB": "Uruguay",
+    "date": "Jun 21"
+  },
+  {
+    "id": 47,
+    "group": "H",
+    "teamA": "Spain",
+    "teamB": "Uruguay",
+    "date": "Jun 27"
+  },
+  {
+    "id": 48,
+    "group": "H",
+    "teamA": "Saudi Arabia",
+    "teamB": "Cape Verde",
+    "date": "Jun 27"
+  },
+  {
+    "id": 49,
+    "group": "I",
+    "teamA": "Senegal",
+    "teamB": "France",
+    "date": "Jun 16"
+  },
+  {
+    "id": 50,
+    "group": "I",
+    "teamA": "Norway",
+    "teamB": "Iraq",
+    "date": "Jun 16"
+  },
+  {
+    "id": 51,
+    "group": "I",
+    "teamA": "Iraq",
+    "teamB": "France",
+    "date": "Jun 22"
+  },
+  {
+    "id": 52,
+    "group": "I",
+    "teamA": "Senegal",
+    "teamB": "Norway",
+    "date": "Jun 23"
+  },
+  {
+    "id": 53,
+    "group": "I",
+    "teamA": "France",
+    "teamB": "Norway",
+    "date": "Jun 26"
+  },
+  {
+    "id": 54,
+    "group": "I",
+    "teamA": "Iraq",
+    "teamB": "Senegal",
+    "date": "Jun 26"
+  },
+  {
+    "id": 55,
+    "group": "J",
+    "teamA": "Algeria",
+    "teamB": "Argentina",
+    "date": "Jun 17"
+  },
+  {
+    "id": 56,
+    "group": "J",
+    "teamA": "Jordan",
+    "teamB": "Austria",
+    "date": "Jun 17"
+  },
+  {
+    "id": 57,
+    "group": "J",
+    "teamA": "Austria",
+    "teamB": "Argentina",
+    "date": "Jun 22"
+  },
+  {
+    "id": 58,
+    "group": "J",
+    "teamA": "Algeria",
+    "teamB": "Jordan",
+    "date": "Jun 23"
+  },
+  {
+    "id": 59,
+    "group": "J",
+    "teamA": "Austria",
+    "teamB": "Algeria",
+    "date": "Jun 28"
+  },
+  {
+    "id": 60,
+    "group": "J",
+    "teamA": "Argentina",
+    "teamB": "Jordan",
+    "date": "Jun 28"
+  },
+  {
+    "id": 61,
+    "group": "K",
+    "teamA": "Portugal",
+    "teamB": "DR Congo",
+    "date": "Jun 17"
+  },
+  {
+    "id": 62,
+    "group": "K",
+    "teamA": "Uzbekistan",
+    "teamB": "Colombia",
+    "date": "Jun 17"
+  },
+  {
+    "id": 63,
+    "group": "K",
+    "teamA": "Portugal",
+    "teamB": "Uzbekistan",
+    "date": "Jun 23"
+  },
+  {
+    "id": 64,
+    "group": "K",
+    "teamA": "Colombia",
+    "teamB": "DR Congo",
+    "date": "Jun 23"
+  },
+  {
+    "id": 65,
+    "group": "K",
+    "teamA": "Colombia",
+    "teamB": "Portugal",
+    "date": "Jun 27"
+  },
+  {
+    "id": 66,
+    "group": "K",
+    "teamA": "DR Congo",
+    "teamB": "Uzbekistan",
+    "date": "Jun 27"
+  },
+  {
+    "id": 67,
+    "group": "L",
+    "teamA": "England",
+    "teamB": "Croatia",
+    "date": "Jun 17"
+  },
+  {
+    "id": 68,
+    "group": "L",
+    "teamA": "Ghana",
+    "teamB": "Panama",
+    "date": "Jun 17"
+  },
+  {
+    "id": 69,
+    "group": "L",
+    "teamA": "England",
+    "teamB": "Ghana",
+    "date": "Jun 23"
+  },
+  {
+    "id": 70,
+    "group": "L",
+    "teamA": "Croatia",
+    "teamB": "Panama",
+    "date": "Jun 23"
+  },
+  {
+    "id": 71,
+    "group": "L",
+    "teamA": "England",
+    "teamB": "Panama",
+    "date": "Jun 27"
+  },
+  {
+    "id": 72,
+    "group": "L",
+    "teamA": "Croatia",
+    "teamB": "Ghana",
+    "date": "Jun 27"
+  }
+]

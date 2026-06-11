@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "import": "tsx scripts/import.ts",
+    "set-result": "tsx scripts/setResult.ts",
+    "predev": "tsx scripts/import.ts",
+    "dev": "next dev -p 8080",
+    "prebuild": "tsx scripts/import.ts",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "eslint"
   },
   "dependencies": {
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -21,6 +26,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }

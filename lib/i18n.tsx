@@ -1,0 +1,124 @@
+"use client";
+
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import type { Lang } from "./types";
+
+type Dict = Record<string, string>;
+
+const MESSAGES: Record<Lang, Dict> = {
+  es: {
+    subtitle: "RMP / PEYTIO",
+    legend: "1 = gana el primero · X = empate · 2 = gana el segundo",
+    nav_leaderboard: "Tabla",
+    nav_matches: "Partidos",
+    leaderboard_title: "Tabla de Posiciones",
+    decided: "{n} / {total} partidos definidos",
+    updated: "Actualizado {date}",
+    never_updated: "Sin resultados aún",
+    col_rank: "#",
+    col_player: "Jugador",
+    col_points: "Pts",
+    col_correct: "Aciertos",
+    col_acc: "Prec.",
+    empty_players: "Aún no hay jugadores. Coloca un Excel en data/predictions y vuelve a desplegar.",
+    profile_back: "Tabla de Posiciones",
+    stat_points: "Puntos",
+    stat_correct: "Aciertos",
+    stat_accuracy: "Precisión",
+    stat_pending: "Pendientes",
+    stat_rank: "Posición",
+    stat_best_group: "Mejor grupo",
+    group_label: "Grupo {g}",
+    th_match: "Partido",
+    th_pick: "Pronóstico",
+    th_result: "Resultado",
+    pick_draw: "Empate",
+    matches_title: "Partidos y Resultados",
+    got_it_right: "{n}/{total} aciertos",
+    result_pending: "Pendiente",
+    result_draw: "Empate",
+    legend_short: "1 · X · 2",
+    of: "de",
+    footer: "Gran Quinela Mundialista · actualizado automáticamente desde internet",
+    no_pick: "—",
+  },
+  en: {
+    subtitle: "RMP / PEYTIO",
+    legend: "1 = first team wins · X = draw · 2 = second team wins",
+    nav_leaderboard: "Leaderboard",
+    nav_matches: "Matches",
+    leaderboard_title: "Leaderboard",
+    decided: "{n} / {total} matches decided",
+    updated: "Updated {date}",
+    never_updated: "No results yet",
+    col_rank: "#",
+    col_player: "Player",
+    col_points: "Pts",
+    col_correct: "Correct",
+    col_acc: "Acc.",
+    empty_players: "No players yet. Drop an Excel file in data/predictions and redeploy.",
+    profile_back: "Leaderboard",
+    stat_points: "Points",
+    stat_correct: "Correct",
+    stat_accuracy: "Accuracy",
+    stat_pending: "Pending",
+    stat_rank: "Rank",
+    stat_best_group: "Best group",
+    group_label: "Group {g}",
+    th_match: "Match",
+    th_pick: "Pick",
+    th_result: "Result",
+    pick_draw: "Draw",
+    matches_title: "Fixtures & Results",
+    got_it_right: "{n}/{total} right",
+    result_pending: "Pending",
+    result_draw: "Draw",
+    legend_short: "1 · X · 2",
+    of: "of",
+    footer: "Gran Quinela Mundialista · auto-updated from the internet",
+    no_pick: "—",
+  },
+};
+
+interface LangCtx {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  toggle: () => void;
+  t: (key: keyof typeof MESSAGES["en"], vars?: Record<string, string | number>) => string;
+}
+
+const Ctx = createContext<LangCtx | null>(null);
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLangState] = useState<Lang>("es");
+
+  useEffect(() => {
+    const saved = (typeof window !== "undefined" && localStorage.getItem("lang")) as Lang | null;
+    if (saved === "es" || saved === "en") setLangState(saved);
+  }, []);
+
+  const setLang = useCallback((l: Lang) => {
+    setLangState(l);
+    if (typeof window !== "undefined") localStorage.setItem("lang", l);
+    if (typeof document !== "undefined") document.documentElement.lang = l;
+  }, []);
+
+  const toggle = useCallback(() => setLang(lang === "es" ? "en" : "es"), [lang, setLang]);
+
+  const t = useCallback(
+    (key: string, vars?: Record<string, string | number>) => {
+      let s = MESSAGES[lang][key] ?? MESSAGES.en[key] ?? key;
+      if (vars) for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, String(v));
+      return s;
+    },
+    [lang]
+  );
+
+  return <Ctx.Provider value={{ lang, setLang, toggle, t }}>{children}</Ctx.Provider>;
+}
+
+export function useLang(): LangCtx {
+  const c = useContext(Ctx);
+  if (!c) throw new Error("useLang must be used within LanguageProvider");
+  return c;
+}

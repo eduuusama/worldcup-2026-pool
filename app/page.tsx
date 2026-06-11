@@ -1,65 +1,86 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { matches, players, results, decidedCount, lastUpdated } from "@/lib/data";
+import { leaderboard } from "@/lib/scoring";
+import { useLang } from "@/lib/i18n";
+
+const MEDAL = ["🥇", "🥈", "🥉"];
+
+function fmtDate(iso: string | null, lang: string): string | null {
+  if (!iso) return null;
+  return new Date(iso + "T12:00:00").toLocaleDateString(lang === "es" ? "es-ES" : "en-US", {
+    day: "numeric",
+    month: "short",
+  });
+}
+
+export default function LeaderboardPage() {
+  const { t, lang } = useLang();
+  const board = leaderboard(players, matches, results);
+  const decided = decidedCount();
+  const total = matches.length;
+  const updated = fmtDate(lastUpdated(), lang);
+  const pct = total ? Math.round((decided / total) * 100) : 0;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="space-y-5">
+      {/* Header / status */}
+      <section className="card p-5">
+        <h1 className="text-xl font-bold tracking-tight">{t("leaderboard_title")}</h1>
+        <p className="text-xs text-[var(--muted)] mt-1">{t("legend")}</p>
+
+        <div className="mt-4 flex items-center justify-between text-sm">
+          <span className="text-[var(--muted)]">{t("decided", { n: decided, total })}</span>
+          <span className="text-[var(--muted)]">
+            {updated ? t("updated", { date: updated }) : t("never_updated")}
+          </span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
+          <div className="h-full rounded-full bg-[var(--accent)] transition-all" style={{ width: `${pct}%` }} />
         </div>
-      </main>
+      </section>
+
+      {/* Ranking */}
+      {board.length === 0 ? (
+        <div className="card p-8 text-center text-[var(--muted)] text-sm">{t("empty_players")}</div>
+      ) : (
+        <section className="space-y-2">
+          {board.map((p) => {
+            const medal = p.rank <= 3 ? MEDAL[p.rank - 1] : null;
+            return (
+              <Link
+                key={p.slug}
+                href={`/player/${p.slug}`}
+                className="card px-4 py-3 flex items-center gap-3 hover:bg-[var(--card-hover)] transition-colors"
+              >
+                <div className="w-8 text-center shrink-0">
+                  {medal ? (
+                    <span className="text-xl">{medal}</span>
+                  ) : (
+                    <span className="text-[var(--muted)] font-semibold tnum">{p.rank}</span>
+                  )}
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <div className="font-semibold truncate">{p.name}</div>
+                  <div className="text-xs text-[var(--muted)] tnum">
+                    {p.correct}/{p.played} {t("col_correct").toLowerCase()}
+                    {p.played > 0 && <> · {Math.round(p.accuracy * 100)}%</>}
+                  </div>
+                </div>
+
+                <div className="text-right shrink-0">
+                  <div className="text-2xl font-bold tnum leading-none text-[var(--accent)]">{p.points}</div>
+                  <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-0.5">
+                    {t("col_points")}
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </section>
+      )}
     </div>
   );
 }

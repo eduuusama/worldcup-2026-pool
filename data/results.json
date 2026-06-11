@@ -1,0 +1,578 @@
+{
+  "1": {
+    "outcome": "2",
+    "scoreA": 0,
+    "scoreB": 2,
+    "status": "final",
+    "source": "https://www.cnn.com/2026/06/11/sport/live-news/world-cup-mexico-south-africa",
+    "updatedAt": "2026-06-11"
+  },
+  "2": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "3": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "4": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "5": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "6": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "7": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "8": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "9": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "10": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "11": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "12": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "13": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "14": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "15": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "16": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "17": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "18": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "19": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "20": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "21": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "22": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "23": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "24": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "25": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "26": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "27": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "28": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "29": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "30": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "31": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "32": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "33": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "34": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "35": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "36": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "37": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "38": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "39": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "40": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "41": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "42": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "43": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "44": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "45": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "46": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "47": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "48": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "49": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "50": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "51": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "52": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "53": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "54": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "55": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "56": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "57": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "58": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "59": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "60": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "61": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "62": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "63": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "64": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "65": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "66": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "67": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "68": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "69": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "70": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "71": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  },
+  "72": {
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
+  }
+}
