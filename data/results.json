@@ -8,12 +8,12 @@
     "updatedAt": "2026-06-11"
   },
   "2": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "2",
+    "scoreA": 1,
+    "scoreB": 2,
+    "status": "final",
+    "source": "https://www.espn.com/soccer/match/_/gameId/760414/czechia-south-korea",
+    "updatedAt": "2026-06-11"
   },
   "3": {
     "outcome": null,

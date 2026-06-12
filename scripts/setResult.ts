@@ -1,12 +1,17 @@
 /**
  * Manual result override / helper for the scheduled updater.
  *
- *   npm run set-result <matchId> <1|X|2> [scoreA] [scoreB] [source]
+ *   npm run set-result <matchId> <1|X|2> [scoreA] [scoreB] [source] [playedOn]
  *   npm run set-result 5 1 2 1 https://www.fifa.com/...
+ *   npm run set-result 5 1 2 1 https://... 2026-06-13   # backfill a past day
  *   npm run set-result 5 clear           # reset a match back to pending
  *
  * `outcome` is in the sheet's orientation: 1 = teamA wins, X = draw, 2 = teamB wins.
  * Look up which team is teamA / teamB in data/matches.json before setting.
+ *
+ * `updatedAt` records the day the match actually finished (LOCAL date, or the
+ * explicit playedOn argument) — the daily email groups matches by this field,
+ * not by the sheet's simulated dates.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -15,7 +20,7 @@ const ROOT = process.cwd();
 const resultsPath = path.join(ROOT, "data", "results.json");
 const matchesPath = path.join(ROOT, "data", "matches.json");
 
-const [, , idArg, outcomeArg, scoreAArg, scoreBArg, sourceArg] = process.argv;
+const [, , idArg, outcomeArg, scoreAArg, scoreBArg, sourceArg, playedOnArg] = process.argv;
 
 if (!idArg || !outcomeArg) {
   console.error("Usage: npm run set-result <matchId> <1|X|2|clear> [scoreA] [scoreB] [source]");
@@ -35,7 +40,10 @@ if (!match) {
 }
 
 const results = JSON.parse(fs.readFileSync(resultsPath, "utf8"));
-const today = new Date().toISOString().slice(0, 10);
+// toISOString() is UTC and rolls over at 6 pm local (CST) — use the local
+// calendar date so late-night finals land on the day they were actually played.
+const localToday = new Date().toLocaleDateString("en-CA");
+const today = playedOnArg && /^\d{4}-\d{2}-\d{2}$/.test(playedOnArg) ? playedOnArg : localToday;
 
 if (/^(clear|null|-|reset)$/i.test(outcomeArg)) {
   results[id] = { outcome: null, scoreA: null, scoreB: null, status: "scheduled", source: null, updatedAt: today };
