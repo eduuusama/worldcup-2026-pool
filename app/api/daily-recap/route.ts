@@ -252,10 +252,16 @@ export async function GET(req: Request) {
     }
     log.recorded = changed;
 
-    // 4. Persist new results so the website matches the email.
+    // 4. Persist new results so the website matches the email. NON-FATAL: a GitHub
+    //    hiccup must never block the email (computed in-memory from the same data).
     if (changed && doCommit && token && sha) {
-      await ghPutResults(token, results, sha, `chore: results for ${day} (auto)`);
-      log.committed = true;
+      try {
+        await ghPutResults(token, results, sha, `chore: results for ${day} (auto)`);
+        log.committed = true;
+      } catch (e) {
+        console.error("[daily-recap] commit failed (non-fatal):", e);
+        log.commitError = String(e);
+      }
     }
 
     // 5. Standings + movements (same ranking the site uses).
