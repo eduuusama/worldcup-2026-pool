@@ -92,6 +92,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
+  const dry = new URL(req.url).searchParams.get("dry") === "1"; // test: fetch but don't commit
+
   try {
     const token = process.env.GITHUB_TOKEN;
 
@@ -129,7 +131,7 @@ export async function POST(req: Request) {
     // Persist so every visitor (and the email) sees it. Non-fatal on failure —
     // the caller still gets the fresh results to render immediately.
     let committed = false;
-    if (items.length && token && sha) {
+    if (items.length && token && sha && !dry) {
       try {
         await ghPutResults(token, results, sha, `chore: results update via site button (${dates[1]})`);
         committed = true;

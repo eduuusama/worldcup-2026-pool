@@ -16,12 +16,12 @@
     "updatedAt": "2026-06-11"
   },
   "3": {
-    "outcome": "2",
-    "scoreA": 0,
-    "scoreB": 2,
-    "status": "final",
-    "source": "Manual update (perplexity/sonar web search)",
-    "updatedAt": "2026-06-11"
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
   },
   "4": {
     "outcome": null,
@@ -32,28 +32,28 @@
     "updatedAt": null
   },
   "5": {
-    "outcome": "1",
-    "scoreA": 2,
-    "scoreB": 1,
-    "status": "final",
-    "source": "Manual update (perplexity/sonar web search)",
-    "updatedAt": "2026-06-11"
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
   },
   "6": {
-    "outcome": "1",
-    "scoreA": 2,
-    "scoreB": 0,
-    "status": "final",
-    "source": "Manual update (perplexity/sonar web search)",
-    "updatedAt": "2026-06-11"
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
   },
   "7": {
-    "outcome": "X",
-    "scoreA": 0,
-    "scoreB": 0,
-    "status": "final",
-    "source": "Manual update (perplexity/sonar web search)",
-    "updatedAt": "2026-06-12"
+    "outcome": null,
+    "scoreA": null,
+    "scoreB": null,
+    "status": "scheduled",
+    "source": null,
+    "updatedAt": null
   },
   "8": {
     "outcome": null,
