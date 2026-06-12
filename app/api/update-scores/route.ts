@@ -17,49 +17,35 @@ const teams = teamsJson as Record<string, TeamInfo>;
 const MODEL = "perplexity/sonar"; // web-grounded; free AI Gateway tier
 const TZ = "America/Mexico_City";
 
-interface Found {
-  id: number;
-  scoreA: number;
-  scoreB: number;
-  date: string; // real YYYY-MM-DD the match was played
-}
-
 /**
- * Ask the web which matches finished on a SPECIFIC recent date (yesterday or
- * today). Anchoring to concrete real dates is the anti-hallucination guard: the
- * model reliably knows the true fixture list for "June 12" and won't claim a
- * matchday-2 game (really days away) happened then. The open-ended "which of
- * these 70 pending matches have been played?" question, by contrast, tempts it
- * to confabulate plausible scores+dates — so we never ask that.
- *
- * We then strictly reject any result whose date is outside the queried window.
+ * Map common name variants the model returns onto our canonical (normalized)
+ * team names. Keyed by normalized variant -> normalized canonical.
  */
-async function fetchFinished(pending: Match[], dates: string[]): Promise<Found[]> {
-  if (pending.length === 0) return [];
-  const list = pending.map((m) => `${m.id}: ${m.teamA} (teamA) vs ${m.teamB} (teamB)`).join("\n");
-  const window = dates.join(" or ");
-  const prompt = `You track 2026 FIFA World Cup results. Here are matches NOT yet recorded:
-${list}
+const ALIASES: Record<string, string> = {
+  czechia: "czechrepublic",
+  korearepublic: "southkorea",
+  korea: "southkorea",
+  unitedstates: "usa",
+  unitedstatesofamerica: "usa",
+  us: "usa",
+  usmnt: "usa",
+  cotedivoire: "ivorycoast",
+  bosniaandherzegovina: "bosniaherzegovina",
+  bosnia: "bosniaherzegovina",
+  democraticrepublicofthecongo: "drcongo",
+  congodr: "drcongo",
+  congo: "drcongo",
+  caboverde: "capeverde",
+  turkiye: "turkey",
+};
 
-Which of THESE EXACT matchups were actually PLAYED and FINISHED (full-time final score) specifically on ${window}?
-- "scoreA" = goals by the team labelled (teamA); "scoreB" = goals by (teamB). Map by TEAM NAME, never by home/away.
-- "date" = the real calendar date the match was played, as YYYY-MM-DD; it MUST be exactly ${window}.
-- ONLY include a match that genuinely kicked off and finished on one of those exact dates. Do NOT include matches scheduled for any other day, do NOT guess, and never attribute a team's result against a different opponent to this matchup. When unsure, omit it.
-
-Return STRICT JSON only: {"matches":[{"id":<number>,"scoreA":<number>,"scoreB":<number>,"date":"YYYY-MM-DD"}]}
-If no listed matchup was played on ${window}, return {"matches":[]}.`;
-
-  const { text } = await generateText({ model: MODEL, prompt });
-  const parsed = extractJson<{ matches: Found[] }>(text);
-  return (parsed?.matches ?? []).filter(
-    (m) =>
-      Number.isInteger(m.id) &&
-      pending.some((x) => x.id === m.id) &&
-      Number.isFinite(m.scoreA) &&
-      Number.isFinite(m.scoreB) &&
-      typeof m.date === "string" &&
-      dates.includes(m.date) // strictly within the queried window
-  );
+function canon(name: string): string {
+  const n = String(name)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "") // strip combining diacritics
+    .replace(/[^a-z0-9]/g, "");
+  return ALIASES[n] ?? n;
 }
 
 function todayIso(): string {
@@ -71,13 +57,40 @@ function todayIso(): string {
   }).format(new Date());
 }
 
-/** The recent window the button looks at: yesterday + today (local). */
-function recentDates(): string[] {
-  const today = todayIso();
-  const d = new Date(`${today}T12:00:00Z`);
-  d.setUTCDate(d.getUTCDate() - 1);
-  const yesterday = d.toISOString().slice(0, 10);
-  return [yesterday, today];
+interface Played {
+  home: string;
+  away: string;
+  homeScore: number;
+  awayScore: number;
+  date: string;
+}
+
+/**
+ * Open-world query: ask the web to REPORT which matches have actually been
+ * played so far (with scores + dates). This is reliable — handing the model the
+ * full fixture list and asking "which of these were played?" instead makes it
+ * confabulate plausible results for games that haven't happened. So we never do
+ * that; we ask it to report reality, then match those results to our fixtures by
+ * team name in code.
+ */
+async function fetchPlayed(today: string): Promise<Played[]> {
+  const prompt = `Today is ${today}. List ONLY the 2026 FIFA World Cup matches that have ALREADY kicked off and reached a FINAL full-time score so far in the entire tournament. For each give: home team, away team, the final score for each, and the date played (YYYY-MM-DD). Do NOT list any match that has not been played yet or is scheduled for a future date. Be accurate; if a match is still upcoming, omit it.
+
+Return STRICT JSON only: {"played":[{"home":"<team>","away":"<team>","homeScore":<n>,"awayScore":<n>,"date":"YYYY-MM-DD"}]}`;
+
+  const { text } = await generateText({ model: MODEL, prompt });
+  const parsed = extractJson<{ played: Played[] }>(text);
+  return (parsed?.played ?? []).filter(
+    (p) =>
+      p &&
+      typeof p.home === "string" &&
+      typeof p.away === "string" &&
+      Number.isFinite(p.homeScore) &&
+      Number.isFinite(p.awayScore) &&
+      typeof p.date === "string" &&
+      /^\d{4}-\d{2}-\d{2}$/.test(p.date) &&
+      p.date <= today // backstop: never accept a future-dated result
+  );
 }
 
 export async function POST(req: Request) {
@@ -108,24 +121,31 @@ export async function POST(req: Request) {
       }
     }
 
-    const dates = recentDates();
-    const pending = matches.filter((m) => !results[String(m.id)]?.outcome);
-    const found = await fetchFinished(pending, dates);
+    const today = todayIso();
+    const played = await fetchPlayed(today);
+
+    // Index our fixtures by unordered team pair (each pair is unique in the group stage).
+    const byPair = new Map<string, Match>();
+    for (const m of matches) byPair.set([canon(m.teamA), canon(m.teamB)].sort().join("|"), m);
 
     const items: { id: number; teamA: string; teamB: string; scoreA: number; scoreB: number; outcome: string }[] = [];
-    for (const f of found) {
-      const match = matches.find((m) => m.id === f.id);
-      if (!match || results[String(f.id)]?.outcome) continue;
-      const outcome = f.scoreA > f.scoreB ? "1" : f.scoreA < f.scoreB ? "2" : "X";
-      results[String(f.id)] = {
+    for (const p of played) {
+      const match = byPair.get([canon(p.home), canon(p.away)].sort().join("|"));
+      if (!match || results[String(match.id)]?.outcome) continue;
+      // Re-orient the reported score onto our teamA / teamB.
+      const homeIsA = canon(p.home) === canon(match.teamA);
+      const scoreA = homeIsA ? p.homeScore : p.awayScore;
+      const scoreB = homeIsA ? p.awayScore : p.homeScore;
+      const outcome = scoreA > scoreB ? "1" : scoreA < scoreB ? "2" : "X";
+      results[String(match.id)] = {
         outcome,
-        scoreA: f.scoreA,
-        scoreB: f.scoreB,
+        scoreA,
+        scoreB,
         status: "final",
         source: `Manual update (${MODEL} web search)`,
-        updatedAt: f.date, // the real date played (drives email day-grouping)
+        updatedAt: p.date,
       } as ResultEntry;
-      items.push({ id: f.id, teamA: match.teamA, teamB: match.teamB, scoreA: f.scoreA, scoreB: f.scoreB, outcome });
+      items.push({ id: match.id, teamA: match.teamA, teamB: match.teamB, scoreA, scoreB, outcome });
     }
 
     // Persist so every visitor (and the email) sees it. Non-fatal on failure —
@@ -133,7 +153,7 @@ export async function POST(req: Request) {
     let committed = false;
     if (items.length && token && sha && !dry) {
       try {
-        await ghPutResults(token, results, sha, `chore: results update via site button (${dates[1]})`);
+        await ghPutResults(token, results, sha, `chore: results update via site button (${today})`);
         committed = true;
       } catch (e) {
         console.error("[update-scores] commit failed (non-fatal):", e);
@@ -163,9 +183,6 @@ export async function POST(req: Request) {
     const msg = String(err);
     const rateLimited = /rate.?limit|429/i.test(msg);
     console.error("[update-scores]", err);
-    return NextResponse.json(
-      { error: rateLimited ? "rate_limited" : msg },
-      { status: rateLimited ? 429 : 500 }
-    );
+    return NextResponse.json({ error: rateLimited ? "rate_limited" : msg }, { status: rateLimited ? 429 : 500 });
   }
 }
