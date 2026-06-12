@@ -5,9 +5,9 @@ import predictionsJson from "@/data/predictions.json";
 import bundledResults from "@/data/results.json";
 import teamsJson from "@/data/teams.json";
 import type { Match, Player, Results, TeamInfo } from "@/lib/types";
-import { buildRecap } from "@/lib/standings";
+import { buildRecap, type RecapData } from "@/lib/standings";
 import { buildRecapEmail } from "@/lib/recap-email";
-import { ghGetResults, ghPutResults, extractJson, validPlayed, recordPlayed } from "@/lib/results-sync";
+import { ghGetResults, ghPutResults, extractJson, fetchEspnPlayed, datesFrom, recordPlayed } from "@/lib/results-sync";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -17,7 +17,8 @@ const players = predictionsJson as Player[];
 const teams = teamsJson as Record<string, TeamInfo>;
 
 const TZ = "America/Mexico_City";
-const RESULTS_MODEL = "perplexity/sonar"; // web-grounded; available on the free AI Gateway tier
+const TOURNAMENT_START = "2026-06-11";
+const PROSE_MODEL = "perplexity/sonar"; // web-grounded; free AI Gateway tier
 
 // ---- helpers ---------------------------------------------------------------
 
@@ -50,46 +51,8 @@ function dateLabelEs(iso: string): string {
     .replace(",", "");
 }
 
-interface DayRecap {
-  played: ReturnType<typeof validPlayed>;
-  momentEs: string; // AI flavour: the dramatic moment — NOT a winner/score statement
-  funFactEs: string;
-}
-
-/**
- * ONE web-grounded call does everything: REPORT the matches actually played so
- * far (open-world — reliable, no hallucination) AND write the colour commentary +
- * fun fact for `day`. Results are mapped to our fixtures in code; the AI is never
- * handed the fixture list to "confirm" (that primes confabulation) and is never
- * asked who won (it inverts scorelines — winners are rendered by winnerSummaryEs).
- *
- * The free AI Gateway tier rate-limits back-to-back requests and the cron runs
- * once a day, so a single combined call is both necessary and sufficient.
- */
-async function fetchDayRecap(day: string, today: string): Promise<DayRecap> {
-  const prompt = `You cover the 2026 FIFA World Cup for a friendly prediction pool. Today is ${today}.
-
-TASK 1 — Results: List ONLY the 2026 FIFA World Cup matches that have ALREADY kicked off and reached a FINAL full-time score so far in the entire tournament. For each: home team, away team, the final score for each, and the date played (YYYY-MM-DD). Do NOT include any match not yet played or scheduled for a future date.
-
-TASK 2 — "momentEs": ONE or TWO sentences in SPANISH (warm, fun, Latin-American, 1-2 emojis) about the single most dramatic or funny MOMENT among the matches played specifically on ${day} (a golazo, a red card, an upset, a record, a fan moment). Use Spanish team names (México, Corea del Sur, Chequia, Sudáfrica, etc.). Describe the EVENT only — do NOT state final scores and do NOT say who won or lost. Base it strictly on what really happened. If no match was played on ${day}, use "".
-
-TASK 3 — "funFactEs": 1-2 sentences in SPANISH with a REAL World Cup history fun fact relevant to a team or stadium that played on ${day}.
-
-Return STRICT JSON only, no other text:
-{"played":[{"home":"<team>","away":"<team>","homeScore":<n>,"awayScore":<n>,"date":"YYYY-MM-DD"}],"momentEs":"<es>","funFactEs":"<es>"}`;
-
-  const { text } = await generateText({ model: RESULTS_MODEL, prompt });
-  const parsed = extractJson<{ played: unknown; momentEs?: string; funFactEs?: string }>(text);
-  return {
-    played: validPlayed(parsed?.played, today),
-    momentEs: parsed?.momentEs?.trim() || "",
-    funFactEs:
-      parsed?.funFactEs?.trim() || "El Mundial 2026 es el primero con 48 selecciones y tres países anfitriones. 🌎",
-  };
-}
-
 /** Deterministic, always-correct "who beat whom" summary in Spanish (winner first). */
-function winnerSummaryEs(recap: { dayResults: { teamA: string; teamB: string; scoreA: number | null; scoreB: number | null; outcome: "1" | "X" | "2" }[] }): string {
+function winnerSummaryEs(recap: RecapData): string {
   const fmt = (name: string) => {
     const t = teams[name];
     return { label: t ? t.es : name, flag: t ? t.flag : "🏳️" };
@@ -105,6 +68,35 @@ function winnerSummaryEs(recap: { dayResults: { teamA: string; teamB: string; sc
       return `${a.flag} ${a.label} y ${b.flag} ${b.label} empataron ${sa}-${sb}`;
     })
     .join(" · ");
+}
+
+/**
+ * The drama line + fun fact for the email (Spanish). Results already come from
+ * ESPN, so this single AI call only writes colour commentary — and is never told
+ * who won (it inverts scorelines; winners are rendered by winnerSummaryEs).
+ */
+async function fetchProse(day: string, recap: RecapData): Promise<{ momentEs: string; funFactEs: string }> {
+  const games = recap.dayResults
+    .map((r) => `${teams[r.teamA]?.es ?? r.teamA} vs ${teams[r.teamB]?.es ?? r.teamB}`)
+    .join("; ");
+  const prompt = `Cubres el Mundial 2026 para una quiniela entre amigos. El ${day} se jugaron estos partidos: ${games}.
+
+TASK 1 — "momentEs": 1-2 frases en ESPAÑOL (cálido, divertido, 1-2 emojis) sobre el momento más dramático o divertido de esos partidos (un golazo, una tarjeta roja, una sorpresa, un récord, un momento de la afición). Describe el EVENTO; NO menciones el marcador final ni quién ganó. Básate en lo que de verdad pasó.
+TASK 2 — "funFactEs": 1-2 frases en ESPAÑOL con un dato curioso REAL de la historia de los Mundiales, relevante a algún equipo o sede que jugó ese día.
+
+Devuelve SOLO JSON: {"momentEs":"<es>","funFactEs":"<es>"}`;
+
+  try {
+    const { text } = await generateText({ model: PROSE_MODEL, prompt });
+    const parsed = extractJson<{ momentEs?: string; funFactEs?: string }>(text);
+    return {
+      momentEs: parsed?.momentEs?.trim() || "",
+      funFactEs:
+        parsed?.funFactEs?.trim() || "El Mundial 2026 es el primero con 48 selecciones y tres países anfitriones. 🌎",
+    };
+  } catch {
+    return { momentEs: "", funFactEs: "El Mundial 2026 es el primero con 48 selecciones y tres países anfitriones. 🌎" };
+  }
 }
 
 async function sendEmail(to: string[], subject: string, html: string): Promise<string> {
@@ -155,16 +147,13 @@ export async function GET(req: Request) {
       }
     }
 
-    // 2. Web-grounded: matches actually played (open-world) + drama + fun fact (one call).
-    const { played, momentEs, funFactEs } = await fetchDayRecap(day, today);
+    // 2. Live results from ESPN; map onto our fixtures and fill any still pending.
+    const played = await fetchEspnPlayed(datesFrom(TOURNAMENT_START, today));
+    const recorded = recordPlayed(results, played, matches, "ESPN scoreboard");
     log.fetched = played.length;
-
-    // 3. Map reported results onto our fixtures and fill any still pending.
-    const recorded = recordPlayed(results, played, matches, `AI Gateway (${RESULTS_MODEL}) web search`);
     log.recorded = recorded.length;
 
-    // 4. Persist new results so the website matches the email. NON-FATAL: a GitHub
-    //    hiccup must never block the email (computed in-memory from the same data).
+    // 3. Persist new results so the website matches the email. NON-FATAL.
     if (recorded.length && doCommit && token && sha) {
       try {
         await ghPutResults(token, results, sha, `chore: results for ${day} (auto)`);
@@ -175,7 +164,7 @@ export async function GET(req: Request) {
       }
     }
 
-    // 5. Standings + movements (same ranking the site uses).
+    // 4. Standings + movements (same ranking the site uses).
     const recap = buildRecap(matches, players, results, day);
     const decidedTotal = Object.values(results).filter((r) => r.outcome).length;
     log.dayResults = recap.dayResults.length;
@@ -184,11 +173,12 @@ export async function GET(req: Request) {
       return NextResponse.json({ sent: false, reason: "no matches finished on this day", ...log });
     }
 
-    // 6. Recap text = deterministic winner summary (always correct) + AI drama flavour.
+    // 5. Recap text = deterministic winner summary (always correct) + AI drama flavour.
+    const { momentEs, funFactEs } = await fetchProse(day, recap);
     const summary = winnerSummaryEs(recap);
     const recapEs = momentEs ? `${summary}. ${momentEs}` : `${summary}.`;
 
-    // 7. Build + send.
+    // 6. Build + send.
     const { subjectHint, html } = buildRecapEmail({
       recap,
       recapEs,

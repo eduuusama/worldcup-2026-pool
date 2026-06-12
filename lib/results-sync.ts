@@ -56,6 +56,59 @@ export interface Played {
   date: string; // YYYY-MM-DD
 }
 
+// --- ESPN scoreboard (authoritative, live, keyless) ------------------------
+//
+// Results come from ESPN's public scoreboard API, not from an LLM: it is
+// real-time, deterministic, and never hallucinates. (Perplexity's web index lags
+// hours behind live finals, which is why the AI missed just-finished games.)
+const ESPN = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
+
+/** Inclusive list of YYYY-MM-DD dates from start to end. */
+export function datesFrom(startIso: string, endIso: string): string[] {
+  const out: string[] = [];
+  const d = new Date(`${startIso}T12:00:00Z`);
+  const end = new Date(`${endIso}T12:00:00Z`);
+  while (d <= end) {
+    out.push(d.toISOString().slice(0, 10));
+    d.setUTCDate(d.getUTCDate() + 1);
+  }
+  return out;
+}
+
+/** Fetch COMPLETED (full-time) World Cup matches from ESPN for the given dates. */
+export async function fetchEspnPlayed(dates: string[]): Promise<Played[]> {
+  const out: Played[] = [];
+  await Promise.all(
+    dates.map(async (date) => {
+      try {
+        const res = await fetch(`${ESPN}?dates=${date.replace(/-/g, "")}`, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        for (const ev of data.events ?? []) {
+          const comp = ev.competitions?.[0];
+          if (!comp || comp.status?.type?.completed !== true) continue; // final only
+          const home = comp.competitors?.find((c: { homeAway: string }) => c.homeAway === "home");
+          const away = comp.competitors?.find((c: { homeAway: string }) => c.homeAway === "away");
+          if (!home || !away) continue;
+          const hs = parseInt(home.score, 10);
+          const as = parseInt(away.score, 10);
+          if (!Number.isFinite(hs) || !Number.isFinite(as)) continue;
+          out.push({
+            home: home.team?.displayName ?? home.team?.name ?? "",
+            away: away.team?.displayName ?? away.team?.name ?? "",
+            homeScore: hs,
+            awayScore: as,
+            date,
+          });
+        }
+      } catch {
+        /* one date failing shouldn't sink the rest */
+      }
+    })
+  );
+  return out;
+}
+
 export interface RecordedItem {
   id: number;
   teamA: string;
