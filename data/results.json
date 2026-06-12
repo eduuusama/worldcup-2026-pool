@@ -16,12 +16,12 @@
     "updatedAt": "2026-06-11"
   },
   "3": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "2",
+    "scoreA": 0,
+    "scoreB": 2,
+    "status": "final",
+    "source": "Manual update (perplexity/sonar web search)",
+    "updatedAt": "2026-06-11"
   },
   "4": {
     "outcome": "1",
@@ -32,20 +32,20 @@
     "updatedAt": "2026-06-12"
   },
   "5": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "1",
+    "scoreA": 2,
+    "scoreB": 1,
+    "status": "final",
+    "source": "Manual update (perplexity/sonar web search)",
+    "updatedAt": "2026-06-11"
   },
   "6": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "1",
+    "scoreA": 2,
+    "scoreB": 0,
+    "status": "final",
+    "source": "Manual update (perplexity/sonar web search)",
+    "updatedAt": "2026-06-11"
   },
   "7": {
     "outcome": null,
