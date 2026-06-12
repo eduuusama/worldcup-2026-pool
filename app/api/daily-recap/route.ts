@@ -4,9 +4,10 @@ import matchesJson from "@/data/matches.json";
 import predictionsJson from "@/data/predictions.json";
 import bundledResults from "@/data/results.json";
 import teamsJson from "@/data/teams.json";
-import type { Match, Player, Results, ResultEntry, TeamInfo } from "@/lib/types";
+import type { Match, Player, Results, TeamInfo } from "@/lib/types";
 import { buildRecap } from "@/lib/standings";
 import { buildRecapEmail } from "@/lib/recap-email";
+import { ghGetResults, ghPutResults, extractJson, validPlayed, recordPlayed } from "@/lib/results-sync";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -15,9 +16,6 @@ const matches = matchesJson as Match[];
 const players = predictionsJson as Player[];
 const teams = teamsJson as Record<string, TeamInfo>;
 
-const REPO = process.env.GITHUB_REPO ?? "eduuusama/worldcup-2026-pool";
-const BRANCH = "main";
-const RESULTS_PATH = "data/results.json";
 const TZ = "America/Mexico_City";
 const RESULTS_MODEL = "perplexity/sonar"; // web-grounded; available on the free AI Gateway tier
 
@@ -52,112 +50,38 @@ function dateLabelEs(iso: string): string {
     .replace(",", "");
 }
 
-/** Pull the first JSON value (object or array) out of an LLM response. */
-function extractJson<T>(text: string): T | null {
-  const cleaned = text.replace(/```json/gi, "").replace(/```/g, "").trim();
-  const start = cleaned.search(/[[{]/);
-  if (start < 0) return null;
-  const open = cleaned[start];
-  const close = open === "[" ? "]" : "}";
-  let depth = 0;
-  for (let i = start; i < cleaned.length; i++) {
-    if (cleaned[i] === open) depth++;
-    else if (cleaned[i] === close) {
-      depth--;
-      if (depth === 0) {
-        try {
-          return JSON.parse(cleaned.slice(start, i + 1)) as T;
-        } catch {
-          return null;
-        }
-      }
-    }
-  }
-  return null;
-}
-
-const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/[^a-z0-9]/g, "");
-
-async function ghGetResults(token: string): Promise<{ results: Results; sha: string } | null> {
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${RESULTS_PATH}?ref=${BRANCH}`, {
-    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
-    cache: "no-store",
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  const content = Buffer.from(data.content, "base64").toString("utf8");
-  return { results: JSON.parse(content) as Results, sha: data.sha as string };
-}
-
-async function ghPutResults(token: string, results: Results, sha: string, message: string) {
-  const body = {
-    message,
-    content: Buffer.from(JSON.stringify(results, null, 2) + "\n").toString("base64"),
-    sha,
-    branch: BRANCH,
-    committer: { name: "Quinela Cron", email: "quinela@aiclear.org" },
-  };
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${RESULTS_PATH}`, {
-    method: "PUT",
-    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) throw new Error(`GitHub PUT failed ${res.status}: ${await res.text()}`);
-}
-
-interface SonarMatch {
-  id: number;
-  scoreA: number;
-  scoreB: number;
-}
-
 interface DayRecap {
-  found: SonarMatch[];
+  played: ReturnType<typeof validPlayed>;
   momentEs: string; // AI flavour: the dramatic moment — NOT a winner/score statement
   funFactEs: string;
 }
 
 /**
- * ONE web-grounded call does everything: extract that day's final scores AND
- * write the colour commentary + fun fact. The free AI Gateway tier rate-limits
- * back-to-back requests, and the cron runs once a day, so a single call is both
- * necessary and sufficient.
+ * ONE web-grounded call does everything: REPORT the matches actually played so
+ * far (open-world — reliable, no hallucination) AND write the colour commentary +
+ * fun fact for `day`. Results are mapped to our fixtures in code; the AI is never
+ * handed the fixture list to "confirm" (that primes confabulation) and is never
+ * asked who won (it inverts scorelines — winners are rendered by winnerSummaryEs).
  *
- * Critically, the AI is NOT asked who won — it confuses score notation (e.g. a
- * "nil two" scoreline) and can invert the winner. Who-beat-whom is rendered
- * deterministically in code from the verified scores (see winnerSummaryEs); the
- * AI only supplies drama.
+ * The free AI Gateway tier rate-limits back-to-back requests and the cron runs
+ * once a day, so a single combined call is both necessary and sufficient.
  */
-async function fetchDayRecap(day: string): Promise<DayRecap> {
-  const list = matches
-    .map((m) => `${m.id}: ${m.teamA} (teamA) vs ${m.teamB} (teamB) [Group ${m.group}]`)
-    .join("\n");
-  const prompt = `You cover the 2026 FIFA World Cup for a friendly prediction pool. Here is the full list of group-stage matches with their ids and the two teams:
-${list}
+async function fetchDayRecap(day: string, today: string): Promise<DayRecap> {
+  const prompt = `You cover the 2026 FIFA World Cup for a friendly prediction pool. Today is ${today}.
 
-TASK 1 — Results: For matches from this list that were PLAYED AND FINISHED (full-time) on ${day} (calendar date), give their final scores.
-- "scoreA" = goals by the team labelled (teamA); "scoreB" = goals by (teamB). Map by TEAM NAME, never by home/away.
-- Only matches you can confirm finished on ${day} with a real final score. Omit upcoming, in-progress, postponed, or unconfirmable ones.
+TASK 1 — Results: List ONLY the 2026 FIFA World Cup matches that have ALREADY kicked off and reached a FINAL full-time score so far in the entire tournament. For each: home team, away team, the final score for each, and the date played (YYYY-MM-DD). Do NOT include any match not yet played or scheduled for a future date.
 
-TASK 2 — "momentEs": ONE or TWO sentences in SPANISH (warm, fun, Latin-American, 1-2 emojis) about the single most dramatic or funny MOMENT of the day (a golazo, a red card, an upset, a record, a fan moment). Use Spanish team names (México, Corea del Sur, Chequia, Sudáfrica, etc.). Describe the EVENT only. Do NOT state final scores and do NOT say which team won or lost — that is handled elsewhere. Base it strictly on what really happened; never invent.
+TASK 2 — "momentEs": ONE or TWO sentences in SPANISH (warm, fun, Latin-American, 1-2 emojis) about the single most dramatic or funny MOMENT among the matches played specifically on ${day} (a golazo, a red card, an upset, a record, a fan moment). Use Spanish team names (México, Corea del Sur, Chequia, Sudáfrica, etc.). Describe the EVENT only — do NOT state final scores and do NOT say who won or lost. Base it strictly on what really happened. If no match was played on ${day}, use "".
 
-TASK 3 — "funFactEs": 1-2 sentences in SPANISH with a REAL World Cup history fun fact relevant to a team or stadium that played that day.
+TASK 3 — "funFactEs": 1-2 sentences in SPANISH with a REAL World Cup history fun fact relevant to a team or stadium that played on ${day}.
 
 Return STRICT JSON only, no other text:
-{"matches":[{"id":<number>,"scoreA":<number>,"scoreB":<number>}],"momentEs":"<es>","funFactEs":"<es>"}
-If no listed match finished on ${day}: {"matches":[],"momentEs":"","funFactEs":""}.`;
+{"played":[{"home":"<team>","away":"<team>","homeScore":<n>,"awayScore":<n>,"date":"YYYY-MM-DD"}],"momentEs":"<es>","funFactEs":"<es>"}`;
 
   const { text } = await generateText({ model: RESULTS_MODEL, prompt });
-  const parsed = extractJson<{ matches: SonarMatch[]; momentEs?: string; funFactEs?: string }>(text);
-  const valid = (parsed?.matches ?? []).filter(
-    (m) =>
-      Number.isInteger(m.id) &&
-      matches.some((x) => x.id === m.id) &&
-      Number.isFinite(m.scoreA) &&
-      Number.isFinite(m.scoreB)
-  );
+  const parsed = extractJson<{ played: unknown; momentEs?: string; funFactEs?: string }>(text);
   return {
-    found: valid,
+    played: validPlayed(parsed?.played, today),
     momentEs: parsed?.momentEs?.trim() || "",
     funFactEs:
       parsed?.funFactEs?.trim() || "El Mundial 2026 es el primero con 48 selecciones y tres países anfitriones. 🌎",
@@ -208,6 +132,7 @@ export async function GET(req: Request) {
   }
 
   const day = url.searchParams.get("date") ?? yesterdayIso();
+  const today = isoDateInTz(new Date());
   const dry = url.searchParams.get("dry") === "1";
   const doCommit = url.searchParams.get("commit") !== "0";
   const toOverride = url.searchParams.get("to");
@@ -230,31 +155,17 @@ export async function GET(req: Request) {
       }
     }
 
-    // 2. Web-grounded: that day's finished matches + drama moment + fun fact (one call).
-    const { found, momentEs, funFactEs } = await fetchDayRecap(day);
-    log.fetched = found.length;
+    // 2. Web-grounded: matches actually played (open-world) + drama + fun fact (one call).
+    const { played, momentEs, funFactEs } = await fetchDayRecap(day, today);
+    log.fetched = played.length;
 
-    // 3. Merge — only fill matches that don't already have a final outcome.
-    let changed = 0;
-    for (const f of found) {
-      const cur = results[String(f.id)];
-      if (cur?.outcome) continue;
-      const outcome = f.scoreA > f.scoreB ? "1" : f.scoreA < f.scoreB ? "2" : "X";
-      results[String(f.id)] = {
-        outcome,
-        scoreA: f.scoreA,
-        scoreB: f.scoreB,
-        status: "final",
-        source: `AI Gateway (${RESULTS_MODEL}) web search`,
-        updatedAt: day,
-      } as ResultEntry;
-      changed++;
-    }
-    log.recorded = changed;
+    // 3. Map reported results onto our fixtures and fill any still pending.
+    const recorded = recordPlayed(results, played, matches, `AI Gateway (${RESULTS_MODEL}) web search`);
+    log.recorded = recorded.length;
 
     // 4. Persist new results so the website matches the email. NON-FATAL: a GitHub
     //    hiccup must never block the email (computed in-memory from the same data).
-    if (changed && doCommit && token && sha) {
+    if (recorded.length && doCommit && token && sha) {
       try {
         await ghPutResults(token, results, sha, `chore: results for ${day} (auto)`);
         log.committed = true;
