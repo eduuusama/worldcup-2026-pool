@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { getPlayer, matches, matchesOf, players, results, groups } from "@/lib/data";
+import { getPlayer, matches, matchesOf, players, groups } from "@/lib/data";
 import { groupBreakdown, leaderboard, scorePlayer } from "@/lib/scoring";
 import { useLang } from "@/lib/i18n";
+import { useResults } from "@/lib/results-context";
 import { Badge, TeamLabel } from "@/components/TeamLabel";
 import type { Match } from "@/lib/types";
 
 export default function PlayerPage() {
   const { t } = useLang();
+  const { results } = useResults();
   const params = useParams();
   const slug = String(params.slug);
   const player = getPlayer(slug);
@@ -90,6 +92,7 @@ export default function PlayerPage() {
 
 function MatchRow({ match, pick }: { match: Match; pick: "1" | "X" | "2" | null }) {
   const { t } = useLang();
+  const { results } = useResults();
   const res = results[String(match.id)];
   const outcome = res?.outcome ?? null;
   const decided = outcome !== null;

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLang } from "@/lib/i18n";
+import { UpdateScoresButton } from "@/components/UpdateScoresButton";
 
 export function Header() {
   const { t, lang, setLang, toggle } = useLang();
@@ -43,6 +44,8 @@ export function Header() {
             {t("nav_matches")}
           </Link>
         </nav>
+
+        <UpdateScoresButton />
 
         {/* Mobile: single sliding toggle switch (ES <-> EN) */}
         <button

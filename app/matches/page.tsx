@@ -1,8 +1,9 @@
 "use client";
 
-import { groups, matchesOf, players, results } from "@/lib/data";
+import { groups, matchesOf, players } from "@/lib/data";
 import { matchPickStats } from "@/lib/scoring";
 import { useLang } from "@/lib/i18n";
+import { useResults } from "@/lib/results-context";
 import { Badge, TeamLabel } from "@/components/TeamLabel";
 import type { Match } from "@/lib/types";
 
@@ -33,6 +34,7 @@ export default function MatchesPage() {
 
 function FixtureRow({ match }: { match: Match }) {
   const { t } = useLang();
+  const { results } = useResults();
   const res = results[String(match.id)];
   const outcome = res?.outcome ?? null;
   const decided = outcome !== null;

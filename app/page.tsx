@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { matches, players, results, decidedCount, lastUpdated } from "@/lib/data";
+import { matches, players, decidedCount, lastUpdated } from "@/lib/data";
 import { leaderboard } from "@/lib/scoring";
 import { useLang } from "@/lib/i18n";
+import { useResults } from "@/lib/results-context";
 
 const MEDAL = ["🥇", "🥈", "🥉"];
 
@@ -17,10 +18,11 @@ function fmtDate(iso: string | null, lang: string): string | null {
 
 export default function LeaderboardPage() {
   const { t, lang } = useLang();
+  const { results } = useResults();
   const board = leaderboard(players, matches, results);
-  const decided = decidedCount();
+  const decided = decidedCount(results);
   const total = matches.length;
-  const updated = fmtDate(lastUpdated(), lang);
+  const updated = fmtDate(lastUpdated(results), lang);
   const pct = total ? Math.round((decided / total) * 100) : 0;
 
   return (
