@@ -20,7 +20,6 @@ const BRANCH = "main";
 const RESULTS_PATH = "data/results.json";
 const TZ = "America/Mexico_City";
 const RESULTS_MODEL = "perplexity/sonar"; // web-grounded; available on the free AI Gateway tier
-const PROSE_MODEL = "perplexity/sonar"; // premium models (claude/gpt) are gated behind paid credits
 
 // ---- helpers ---------------------------------------------------------------
 
@@ -114,15 +113,20 @@ interface SonarMatch {
 
 interface DayRecap {
   found: SonarMatch[];
-  recapEs: string;
+  momentEs: string; // AI flavour: the dramatic moment — NOT a winner/score statement
   funFactEs: string;
 }
 
 /**
  * ONE web-grounded call does everything: extract that day's final scores AND
- * write the Spanish recap + fun fact. The free AI Gateway tier rate-limits
- * back-to-back requests, and the cron only runs once a day, so a single call
- * is both necessary and sufficient.
+ * write the colour commentary + fun fact. The free AI Gateway tier rate-limits
+ * back-to-back requests, and the cron runs once a day, so a single call is both
+ * necessary and sufficient.
+ *
+ * Critically, the AI is NOT asked who won — it confuses score notation (e.g. a
+ * "nil two" scoreline) and can invert the winner. Who-beat-whom is rendered
+ * deterministically in code from the verified scores (see winnerSummaryEs); the
+ * AI only supplies drama.
  */
 async function fetchDayRecap(day: string): Promise<DayRecap> {
   const list = matches
@@ -135,16 +139,16 @@ TASK 1 — Results: For matches from this list that were PLAYED AND FINISHED (fu
 - "scoreA" = goals by the team labelled (teamA); "scoreB" = goals by (teamB). Map by TEAM NAME, never by home/away.
 - Only matches you can confirm finished on ${day} with a real final score. Omit upcoming, in-progress, postponed, or unconfirmable ones.
 
-TASK 2 — "recapEs": 2-4 sentences in SPANISH (warm, fun, Latin-American, 1-2 emojis) about the most exciting/funny/dramatic thing across those matches (a goal, red card, upset, record, fan moment). Base it ONLY on what really happened; do not invent.
+TASK 2 — "momentEs": ONE or TWO sentences in SPANISH (warm, fun, Latin-American, 1-2 emojis) about the single most dramatic or funny MOMENT of the day (a golazo, a red card, an upset, a record, a fan moment). Use Spanish team names (México, Corea del Sur, Chequia, Sudáfrica, etc.). Describe the EVENT only. Do NOT state final scores and do NOT say which team won or lost — that is handled elsewhere. Base it strictly on what really happened; never invent.
 
 TASK 3 — "funFactEs": 1-2 sentences in SPANISH with a REAL World Cup history fun fact relevant to a team or stadium that played that day.
 
 Return STRICT JSON only, no other text:
-{"matches":[{"id":<number>,"scoreA":<number>,"scoreB":<number>}],"recapEs":"<es>","funFactEs":"<es>"}
-If no listed match finished on ${day}: {"matches":[],"recapEs":"","funFactEs":""}.`;
+{"matches":[{"id":<number>,"scoreA":<number>,"scoreB":<number>}],"momentEs":"<es>","funFactEs":"<es>"}
+If no listed match finished on ${day}: {"matches":[],"momentEs":"","funFactEs":""}.`;
 
   const { text } = await generateText({ model: RESULTS_MODEL, prompt });
-  const parsed = extractJson<{ matches: SonarMatch[]; recapEs?: string; funFactEs?: string }>(text);
+  const parsed = extractJson<{ matches: SonarMatch[]; momentEs?: string; funFactEs?: string }>(text);
   const valid = (parsed?.matches ?? []).filter(
     (m) =>
       Number.isInteger(m.id) &&
@@ -154,10 +158,29 @@ If no listed match finished on ${day}: {"matches":[],"recapEs":"","funFactEs":""
   );
   return {
     found: valid,
-    recapEs: parsed?.recapEs?.trim() || "¡Rodó el balón en el Mundial! Revisa la tabla para ver cómo quedó todo. ⚽",
+    momentEs: parsed?.momentEs?.trim() || "",
     funFactEs:
       parsed?.funFactEs?.trim() || "El Mundial 2026 es el primero con 48 selecciones y tres países anfitriones. 🌎",
   };
+}
+
+/** Deterministic, always-correct "who beat whom" summary in Spanish (winner first). */
+function winnerSummaryEs(recap: { dayResults: { teamA: string; teamB: string; scoreA: number | null; scoreB: number | null; outcome: "1" | "X" | "2" }[] }): string {
+  const fmt = (name: string) => {
+    const t = teams[name];
+    return { label: t ? t.es : name, flag: t ? t.flag : "🏳️" };
+  };
+  return recap.dayResults
+    .map((r) => {
+      const a = fmt(r.teamA);
+      const b = fmt(r.teamB);
+      const sa = r.scoreA ?? 0;
+      const sb = r.scoreB ?? 0;
+      if (r.outcome === "1") return `${a.flag} <strong>${a.label}</strong> venció ${sa}-${sb} a ${b.flag} ${b.label}`;
+      if (r.outcome === "2") return `${b.flag} <strong>${b.label}</strong> venció ${sb}-${sa} a ${a.flag} ${a.label}`;
+      return `${a.flag} ${a.label} y ${b.flag} ${b.label} empataron ${sa}-${sb}`;
+    })
+    .join(" · ");
 }
 
 async function sendEmail(to: string[], subject: string, html: string): Promise<string> {
@@ -207,8 +230,8 @@ export async function GET(req: Request) {
       }
     }
 
-    // 2. Web-grounded: that day's finished matches + Spanish recap + fun fact (one call).
-    const { found, recapEs, funFactEs } = await fetchDayRecap(day);
+    // 2. Web-grounded: that day's finished matches + drama moment + fun fact (one call).
+    const { found, momentEs, funFactEs } = await fetchDayRecap(day);
     log.fetched = found.length;
 
     // 3. Merge — only fill matches that don't already have a final outcome.
@@ -244,7 +267,11 @@ export async function GET(req: Request) {
       return NextResponse.json({ sent: false, reason: "no matches finished on this day", ...log });
     }
 
-    // 6. Build + send (recap prose came from the single call above).
+    // 6. Recap text = deterministic winner summary (always correct) + AI drama flavour.
+    const summary = winnerSummaryEs(recap);
+    const recapEs = momentEs ? `${summary}. ${momentEs}` : `${summary}.`;
+
+    // 7. Build + send.
     const { subjectHint, html } = buildRecapEmail({
       recap,
       recapEs,
