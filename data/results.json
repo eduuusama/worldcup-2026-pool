@@ -48,12 +48,12 @@
     "updatedAt": "2026-06-11"
   },
   "7": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "X",
+    "scoreA": 0,
+    "scoreB": 0,
+    "status": "final",
+    "source": "Manual update (perplexity/sonar web search)",
+    "updatedAt": "2026-06-12"
   },
   "8": {
     "outcome": null,
