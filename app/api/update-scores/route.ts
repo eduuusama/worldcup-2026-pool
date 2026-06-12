@@ -25,25 +25,29 @@ interface Found {
 }
 
 /**
- * Ask the web which still-pending matches have actually been played, with final
- * scores AND the real date each was played. The date is the key anti-hallucination
- * guard: the model must commit to a real past date, and we reject anything dated
- * in the future. (Without this, asking "which of these 70 matches finished?" tempts
- * the model to invent a result for a fixture that hasn't happened yet.)
+ * Ask the web which matches finished on a SPECIFIC recent date (yesterday or
+ * today). Anchoring to concrete real dates is the anti-hallucination guard: the
+ * model reliably knows the true fixture list for "June 12" and won't claim a
+ * matchday-2 game (really days away) happened then. The open-ended "which of
+ * these 70 pending matches have been played?" question, by contrast, tempts it
+ * to confabulate plausible scores+dates — so we never ask that.
+ *
+ * We then strictly reject any result whose date is outside the queried window.
  */
-async function fetchFinished(pending: Match[], today: string): Promise<Found[]> {
+async function fetchFinished(pending: Match[], dates: string[]): Promise<Found[]> {
   if (pending.length === 0) return [];
   const list = pending.map((m) => `${m.id}: ${m.teamA} (teamA) vs ${m.teamB} (teamB)`).join("\n");
-  const prompt = `You track 2026 FIFA World Cup results. Today is ${today}. Here are matches NOT yet recorded:
+  const window = dates.join(" or ");
+  const prompt = `You track 2026 FIFA World Cup results. Here are matches NOT yet recorded:
 ${list}
 
-Which of THESE EXACT matchups have ALREADY been played and finished (full-time final score) ON OR BEFORE ${today}?
+Which of THESE EXACT matchups were actually PLAYED and FINISHED (full-time final score) specifically on ${window}?
 - "scoreA" = goals by the team labelled (teamA); "scoreB" = goals by (teamB). Map by TEAM NAME, never by home/away.
-- "date" = the real calendar date the match was played, as YYYY-MM-DD. It MUST be on or before ${today}.
-- ONLY include a match if that specific matchup has genuinely been played already. Do NOT include scheduled/future matches, do NOT guess, and never attribute one team's result from a different opponent to this matchup. When unsure, omit it.
+- "date" = the real calendar date the match was played, as YYYY-MM-DD; it MUST be exactly ${window}.
+- ONLY include a match that genuinely kicked off and finished on one of those exact dates. Do NOT include matches scheduled for any other day, do NOT guess, and never attribute a team's result against a different opponent to this matchup. When unsure, omit it.
 
 Return STRICT JSON only: {"matches":[{"id":<number>,"scoreA":<number>,"scoreB":<number>,"date":"YYYY-MM-DD"}]}
-If none have been played yet, return {"matches":[]}.`;
+If no listed matchup was played on ${window}, return {"matches":[]}.`;
 
   const { text } = await generateText({ model: MODEL, prompt });
   const parsed = extractJson<{ matches: Found[] }>(text);
@@ -54,8 +58,7 @@ If none have been played yet, return {"matches":[]}.`;
       Number.isFinite(m.scoreA) &&
       Number.isFinite(m.scoreB) &&
       typeof m.date === "string" &&
-      /^\d{4}-\d{2}-\d{2}$/.test(m.date) &&
-      m.date <= today // reject future-dated (i.e. not-yet-played) matches
+      dates.includes(m.date) // strictly within the queried window
   );
 }
 
@@ -66,6 +69,15 @@ function todayIso(): string {
     month: "2-digit",
     day: "2-digit",
   }).format(new Date());
+}
+
+/** The recent window the button looks at: yesterday + today (local). */
+function recentDates(): string[] {
+  const today = todayIso();
+  const d = new Date(`${today}T12:00:00Z`);
+  d.setUTCDate(d.getUTCDate() - 1);
+  const yesterday = d.toISOString().slice(0, 10);
+  return [yesterday, today];
 }
 
 export async function POST(req: Request) {
@@ -94,9 +106,9 @@ export async function POST(req: Request) {
       }
     }
 
-    const today = todayIso();
+    const dates = recentDates();
     const pending = matches.filter((m) => !results[String(m.id)]?.outcome);
-    const found = await fetchFinished(pending, today);
+    const found = await fetchFinished(pending, dates);
 
     const items: { id: number; teamA: string; teamB: string; scoreA: number; scoreB: number; outcome: string }[] = [];
     for (const f of found) {
@@ -119,7 +131,7 @@ export async function POST(req: Request) {
     let committed = false;
     if (items.length && token && sha) {
       try {
-        await ghPutResults(token, results, sha, `chore: results update via site button (${today})`);
+        await ghPutResults(token, results, sha, `chore: results update via site button (${dates[1]})`);
         committed = true;
       } catch (e) {
         console.error("[update-scores] commit failed (non-fatal):", e);
