@@ -155,7 +155,10 @@ function readSheet(file: string): SheetData {
     });
   }
 
-  return { players, matches, official };
+  // Drop columns that turned out to have no picks — e.g. a blank "Your Name:"
+  // column sitting next to a real, named pick column (participant templates that
+  // keep both). A column with zero picks is never a real player.
+  return { players: players.filter((p) => Object.keys(p.picks).length > 0), matches, official };
 }
 
 function main() {
