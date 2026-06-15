@@ -1,0 +1,434 @@
+{
+  "1": {
+    "kickoff": "2026-06-11T19:00Z",
+    "venue": "Estadio Banorte",
+    "city": "Mexico City",
+    "country": "Mexico"
+  },
+  "2": {
+    "kickoff": "2026-06-12T02:00Z",
+    "venue": "Estadio Akron",
+    "city": "Guadalajara",
+    "country": "Mexico"
+  },
+  "3": {
+    "kickoff": "2026-06-18T16:00Z",
+    "venue": "Mercedes-Benz Stadium",
+    "city": "Atlanta, Georgia",
+    "country": "USA"
+  },
+  "4": {
+    "kickoff": "2026-06-19T01:00Z",
+    "venue": "Estadio Akron",
+    "city": "Guadalajara",
+    "country": "Mexico"
+  },
+  "5": {
+    "kickoff": "2026-06-25T01:00Z",
+    "venue": "Estadio BBVA",
+    "city": "Guadalupe",
+    "country": "Mexico"
+  },
+  "6": {
+    "kickoff": "2026-06-25T01:00Z",
+    "venue": "Estadio Banorte",
+    "city": "Mexico City",
+    "country": "Mexico"
+  },
+  "7": {
+    "kickoff": "2026-06-12T19:00Z",
+    "venue": "BMO Field",
+    "city": "Toronto",
+    "country": "Canada"
+  },
+  "8": {
+    "kickoff": "2026-06-13T19:00Z",
+    "venue": "Levi's Stadium",
+    "city": "Santa Clara, California",
+    "country": "USA"
+  },
+  "9": {
+    "kickoff": "2026-06-18T19:00Z",
+    "venue": "SoFi Stadium",
+    "city": "Inglewood, California",
+    "country": "USA"
+  },
+  "10": {
+    "kickoff": "2026-06-18T22:00Z",
+    "venue": "BC Place",
+    "city": "Vancouver",
+    "country": "Canada"
+  },
+  "11": {
+    "kickoff": "2026-06-24T19:00Z",
+    "venue": "BC Place",
+    "city": "Vancouver",
+    "country": "Canada"
+  },
+  "12": {
+    "kickoff": "2026-06-24T19:00Z",
+    "venue": "Lumen Field",
+    "city": "Seattle, Washington",
+    "country": "USA"
+  },
+  "13": {
+    "kickoff": "2026-06-13T22:00Z",
+    "venue": "MetLife Stadium",
+    "city": "East Rutherford, New Jersey",
+    "country": "USA"
+  },
+  "14": {
+    "kickoff": "2026-06-14T01:00Z",
+    "venue": "Gillette Stadium",
+    "city": "Foxborough, Massachusetts",
+    "country": "USA"
+  },
+  "15": {
+    "kickoff": "2026-06-19T22:00Z",
+    "venue": "Gillette Stadium",
+    "city": "Foxborough, Massachusetts",
+    "country": "USA"
+  },
+  "16": {
+    "kickoff": "2026-06-20T00:30Z",
+    "venue": "Lincoln Financial Field",
+    "city": "Philadelphia, Pennsylvania",
+    "country": "USA"
+  },
+  "17": {
+    "kickoff": "2026-06-24T22:00Z",
+    "venue": "Hard Rock Stadium",
+    "city": "Miami Gardens, Florida",
+    "country": "USA"
+  },
+  "18": {
+    "kickoff": "2026-06-24T22:00Z",
+    "venue": "Mercedes-Benz Stadium",
+    "city": "Atlanta, Georgia",
+    "country": "USA"
+  },
+  "19": {
+    "kickoff": "2026-06-13T01:00Z",
+    "venue": "SoFi Stadium",
+    "city": "Inglewood, California",
+    "country": "USA"
+  },
+  "20": {
+    "kickoff": "2026-06-14T04:00Z",
+    "venue": "BC Place",
+    "city": "Vancouver",
+    "country": "Canada"
+  },
+  "21": {
+    "kickoff": "2026-06-19T19:00Z",
+    "venue": "Lumen Field",
+    "city": "Seattle, Washington",
+    "country": "USA"
+  },
+  "22": {
+    "kickoff": "2026-06-20T03:00Z",
+    "venue": "Levi's Stadium",
+    "city": "Santa Clara, California",
+    "country": "USA"
+  },
+  "23": {
+    "kickoff": "2026-06-26T02:00Z",
+    "venue": "SoFi Stadium",
+    "city": "Inglewood, California",
+    "country": "USA"
+  },
+  "24": {
+    "kickoff": "2026-06-26T02:00Z",
+    "venue": "Levi's Stadium",
+    "city": "Santa Clara, California",
+    "country": "USA"
+  },
+  "25": {
+    "kickoff": "2026-06-14T17:00Z",
+    "venue": "NRG Stadium",
+    "city": "Houston, Texas",
+    "country": "USA"
+  },
+  "26": {
+    "kickoff": "2026-06-14T23:00Z",
+    "venue": "Lincoln Financial Field",
+    "city": "Philadelphia, Pennsylvania",
+    "country": "USA"
+  },
+  "27": {
+    "kickoff": "2026-06-20T20:00Z",
+    "venue": "BMO Field",
+    "city": "Toronto",
+    "country": "Canada"
+  },
+  "28": {
+    "kickoff": "2026-06-21T00:00Z",
+    "venue": "GEHA Field at Arrowhead Stadium",
+    "city": "Kansas City, Missouri",
+    "country": "USA"
+  },
+  "29": {
+    "kickoff": "2026-06-25T20:00Z",
+    "venue": "MetLife Stadium",
+    "city": "East Rutherford, New Jersey",
+    "country": "USA"
+  },
+  "30": {
+    "kickoff": "2026-06-25T20:00Z",
+    "venue": "Lincoln Financial Field",
+    "city": "Philadelphia, Pennsylvania",
+    "country": "USA"
+  },
+  "31": {
+    "kickoff": "2026-06-14T20:00Z",
+    "venue": "AT&T Stadium",
+    "city": "Arlington, Texas",
+    "country": "USA"
+  },
+  "32": {
+    "kickoff": "2026-06-15T02:00Z",
+    "venue": "Estadio BBVA",
+    "city": "Guadalupe",
+    "country": "Mexico"
+  },
+  "33": {
+    "kickoff": "2026-06-20T17:00Z",
+    "venue": "NRG Stadium",
+    "city": "Houston, Texas",
+    "country": "USA"
+  },
+  "34": {
+    "kickoff": "2026-06-21T04:00Z",
+    "venue": "Estadio BBVA",
+    "city": "Guadalupe",
+    "country": "Mexico"
+  },
+  "35": {
+    "kickoff": "2026-06-25T23:00Z",
+    "venue": "GEHA Field at Arrowhead Stadium",
+    "city": "Kansas City, Missouri",
+    "country": "USA"
+  },
+  "36": {
+    "kickoff": "2026-06-25T23:00Z",
+    "venue": "AT&T Stadium",
+    "city": "Arlington, Texas",
+    "country": "USA"
+  },
+  "37": {
+    "kickoff": "2026-06-15T19:00Z",
+    "venue": "Lumen Field",
+    "city": "Seattle, Washington",
+    "country": "USA"
+  },
+  "38": {
+    "kickoff": "2026-06-16T01:00Z",
+    "venue": "SoFi Stadium",
+    "city": "Inglewood, California",
+    "country": "USA"
+  },
+  "39": {
+    "kickoff": "2026-06-21T19:00Z",
+    "venue": "SoFi Stadium",
+    "city": "Inglewood, California",
+    "country": "USA"
+  },
+  "40": {
+    "kickoff": "2026-06-22T01:00Z",
+    "venue": "BC Place",
+    "city": "Vancouver",
+    "country": "Canada"
+  },
+  "41": {
+    "kickoff": "2026-06-27T03:00Z",
+    "venue": "BC Place",
+    "city": "Vancouver",
+    "country": "Canada"
+  },
+  "42": {
+    "kickoff": "2026-06-27T03:00Z",
+    "venue": "Lumen Field",
+    "city": "Seattle, Washington",
+    "country": "USA"
+  },
+  "43": {
+    "kickoff": "2026-06-15T16:00Z",
+    "venue": "Mercedes-Benz Stadium",
+    "city": "Atlanta, Georgia",
+    "country": "USA"
+  },
+  "44": {
+    "kickoff": "2026-06-15T22:00Z",
+    "venue": "Hard Rock Stadium",
+    "city": "Miami Gardens, Florida",
+    "country": "USA"
+  },
+  "45": {
+    "kickoff": "2026-06-21T16:00Z",
+    "venue": "Mercedes-Benz Stadium",
+    "city": "Atlanta, Georgia",
+    "country": "USA"
+  },
+  "46": {
+    "kickoff": "2026-06-21T22:00Z",
+    "venue": "Hard Rock Stadium",
+    "city": "Miami Gardens, Florida",
+    "country": "USA"
+  },
+  "47": {
+    "kickoff": "2026-06-27T00:00Z",
+    "venue": "Estadio Akron",
+    "city": "Guadalajara",
+    "country": "Mexico"
+  },
+  "48": {
+    "kickoff": "2026-06-27T00:00Z",
+    "venue": "NRG Stadium",
+    "city": "Houston, Texas",
+    "country": "USA"
+  },
+  "49": {
+    "kickoff": "2026-06-16T19:00Z",
+    "venue": "MetLife Stadium",
+    "city": "East Rutherford, New Jersey",
+    "country": "USA"
+  },
+  "50": {
+    "kickoff": "2026-06-16T22:00Z",
+    "venue": "Gillette Stadium",
+    "city": "Foxborough, Massachusetts",
+    "country": "USA"
+  },
+  "51": {
+    "kickoff": "2026-06-22T21:00Z",
+    "venue": "Lincoln Financial Field",
+    "city": "Philadelphia, Pennsylvania",
+    "country": "USA"
+  },
+  "52": {
+    "kickoff": "2026-06-23T00:00Z",
+    "venue": "MetLife Stadium",
+    "city": "East Rutherford, New Jersey",
+    "country": "USA"
+  },
+  "53": {
+    "kickoff": "2026-06-26T19:00Z",
+    "venue": "Gillette Stadium",
+    "city": "Foxborough, Massachusetts",
+    "country": "USA"
+  },
+  "54": {
+    "kickoff": "2026-06-26T19:00Z",
+    "venue": "BMO Field",
+    "city": "Toronto",
+    "country": "Canada"
+  },
+  "55": {
+    "kickoff": "2026-06-17T01:00Z",
+    "venue": "GEHA Field at Arrowhead Stadium",
+    "city": "Kansas City, Missouri",
+    "country": "USA"
+  },
+  "56": {
+    "kickoff": "2026-06-17T04:00Z",
+    "venue": "Levi's Stadium",
+    "city": "Santa Clara, California",
+    "country": "USA"
+  },
+  "57": {
+    "kickoff": "2026-06-22T17:00Z",
+    "venue": "AT&T Stadium",
+    "city": "Arlington, Texas",
+    "country": "USA"
+  },
+  "58": {
+    "kickoff": "2026-06-23T03:00Z",
+    "venue": "Levi's Stadium",
+    "city": "Santa Clara, California",
+    "country": "USA"
+  },
+  "59": {
+    "kickoff": "2026-06-28T02:00Z",
+    "venue": "GEHA Field at Arrowhead Stadium",
+    "city": "Kansas City, Missouri",
+    "country": "USA"
+  },
+  "60": {
+    "kickoff": "2026-06-28T02:00Z",
+    "venue": "AT&T Stadium",
+    "city": "Arlington, Texas",
+    "country": "USA"
+  },
+  "61": {
+    "kickoff": "2026-06-17T17:00Z",
+    "venue": "NRG Stadium",
+    "city": "Houston, Texas",
+    "country": "USA"
+  },
+  "62": {
+    "kickoff": "2026-06-18T02:00Z",
+    "venue": "Estadio Banorte",
+    "city": "Mexico City",
+    "country": "Mexico"
+  },
+  "63": {
+    "kickoff": "2026-06-23T17:00Z",
+    "venue": "NRG Stadium",
+    "city": "Houston, Texas",
+    "country": "USA"
+  },
+  "64": {
+    "kickoff": "2026-06-24T02:00Z",
+    "venue": "Estadio Akron",
+    "city": "Guadalajara",
+    "country": "Mexico"
+  },
+  "65": {
+    "kickoff": "2026-06-27T23:30Z",
+    "venue": "Hard Rock Stadium",
+    "city": "Miami Gardens, Florida",
+    "country": "USA"
+  },
+  "66": {
+    "kickoff": "2026-06-27T23:30Z",
+    "venue": "Mercedes-Benz Stadium",
+    "city": "Atlanta, Georgia",
+    "country": "USA"
+  },
+  "67": {
+    "kickoff": "2026-06-17T20:00Z",
+    "venue": "AT&T Stadium",
+    "city": "Arlington, Texas",
+    "country": "USA"
+  },
+  "68": {
+    "kickoff": "2026-06-17T23:00Z",
+    "venue": "BMO Field",
+    "city": "Toronto",
+    "country": "Canada"
+  },
+  "69": {
+    "kickoff": "2026-06-23T20:00Z",
+    "venue": "Gillette Stadium",
+    "city": "Foxborough, Massachusetts",
+    "country": "USA"
+  },
+  "70": {
+    "kickoff": "2026-06-23T23:00Z",
+    "venue": "BMO Field",
+    "city": "Toronto",
+    "country": "Canada"
+  },
+  "71": {
+    "kickoff": "2026-06-27T21:00Z",
+    "venue": "MetLife Stadium",
+    "city": "East Rutherford, New Jersey",
+    "country": "USA"
+  },
+  "72": {
+    "kickoff": "2026-06-27T21:00Z",
+    "venue": "Lincoln Financial Field",
+    "city": "Philadelphia, Pennsylvania",
+    "country": "USA"
+  }
+}

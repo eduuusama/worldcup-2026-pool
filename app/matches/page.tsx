@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { groups, matchesOf, players } from "@/lib/data";
 import { matchPickStats } from "@/lib/scoring";
 import { useLang } from "@/lib/i18n";
@@ -41,7 +42,10 @@ function FixtureRow({ match }: { match: Match }) {
   const stats = matchPickStats(match.id, players, outcome);
 
   return (
-    <div className="grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-2.5">
+    <Link
+      href={`/matches/${match.id}`}
+      className="grid grid-cols-[1fr_auto_auto] items-center gap-3 px-4 py-2.5 hover:bg-[var(--card-hover)] transition-colors"
+    >
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 min-w-0 text-sm">
         <TeamLabel team={match.teamA} align="right" className="min-w-0 justify-end" />
         <span className="text-xs text-[var(--muted)] tnum px-1 shrink-0">
@@ -66,6 +70,8 @@ function FixtureRow({ match }: { match: Match }) {
           </span>
         )}
       </div>
-    </div>
+
+      <span className="text-[var(--muted)] shrink-0">›</span>
+    </Link>
   );
 }
