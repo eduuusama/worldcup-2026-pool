@@ -296,12 +296,12 @@
     "updatedAt": "2026-06-15"
   },
   "38": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "X",
+    "scoreA": 2,
+    "scoreB": 2,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-15"
   },
   "39": {
     "outcome": null,
