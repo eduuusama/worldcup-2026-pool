@@ -16,12 +16,12 @@
     "updatedAt": "2026-06-11"
   },
   "3": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "X",
+    "scoreA": 1,
+    "scoreB": 1,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-18"
   },
   "4": {
     "outcome": null,
