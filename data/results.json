@@ -208,12 +208,12 @@
     "updatedAt": "2026-06-14"
   },
   "27": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "2",
+    "scoreA": 1,
+    "scoreB": 2,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-20"
   },
   "28": {
     "outcome": null,
@@ -256,12 +256,12 @@
     "updatedAt": "2026-06-14"
   },
   "33": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "2",
+    "scoreA": 1,
+    "scoreB": 5,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-20"
   },
   "34": {
     "outcome": null,
