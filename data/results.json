@@ -32,20 +32,20 @@
     "updatedAt": "2026-06-18"
   },
   "5": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "2",
+    "scoreA": 0,
+    "scoreB": 1,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-24"
   },
   "6": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "1",
+    "scoreA": 3,
+    "scoreB": 0,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-24"
   },
   "7": {
     "outcome": "X",
@@ -128,20 +128,20 @@
     "updatedAt": "2026-06-19"
   },
   "17": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "1",
+    "scoreA": 3,
+    "scoreB": 0,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-24"
   },
   "18": {
-    "outcome": null,
-    "scoreA": null,
-    "scoreB": null,
-    "status": "scheduled",
-    "source": null,
-    "updatedAt": null
+    "outcome": "2",
+    "scoreA": 2,
+    "scoreB": 4,
+    "status": "final",
+    "source": "ESPN scoreboard",
+    "updatedAt": "2026-06-24"
   },
   "19": {
     "outcome": "2",
