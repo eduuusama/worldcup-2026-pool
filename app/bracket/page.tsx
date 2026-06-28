@@ -76,6 +76,16 @@ export default function BracketPage() {
     }).format(d);
   };
 
+  // Kickoff time in El Salvador (24h in ES, 12h in EN).
+  const timeLabel = (iso: string) => {
+    if (!iso) return "";
+    return new Intl.DateTimeFormat(lang === "es" ? "es-ES" : "en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "America/El_Salvador",
+    }).format(new Date(iso));
+  };
+
   function SideRow({ side, played }: { side: Side; played: boolean }) {
     const info = side.teamKey ? teamInfo(side.teamKey, lang) : null;
     const resolved = !!info;
@@ -109,7 +119,7 @@ export default function BracketPage() {
         <div className="border-t border-[var(--line)]" />
         <SideRow side={match.away} played={match.state !== "pre"} />
         <div className="text-[8.5px] uppercase tracking-wide text-[var(--muted)] text-center py-0.5 border-t border-[var(--line)] bg-white/[0.015]">
-          {dateLabel(match.date)}
+          {dateLabel(match.date)} · {timeLabel(match.date)}
         </div>
       </div>
     );
@@ -157,8 +167,32 @@ export default function BracketPage() {
   const final = bracket.rounds.FINAL?.[0];
   const bronze = bracket.rounds.BRONZE?.[0];
 
+  const PHASES: { key: "round_r32" | "round_r16" | "round_qf" | "round_sf" | "round_final"; pts: number }[] = [
+    { key: "round_r32", pts: 10 },
+    { key: "round_r16", pts: 20 },
+    { key: "round_qf", pts: 40 },
+    { key: "round_sf", pts: 80 },
+    { key: "round_final", pts: 160 },
+  ];
+
   return (
     <div>
+      {/* Points-per-phase legend */}
+      <section className="card p-4 mb-4">
+        <h2 className="text-sm font-bold tracking-tight mb-3">{t("bracket_points_title")}</h2>
+        <div className="flex flex-wrap gap-2">
+          {PHASES.map((p) => (
+            <div
+              key={p.key}
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--line)] bg-white/[0.03] px-2.5 py-1.5"
+            >
+              <span className="text-xs text-[var(--muted)]">{t(p.key)}</span>
+              <span className="text-xs font-bold text-[var(--accent)] tnum">{p.pts} pts</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Break out of the layout's max-w-4xl so the full bracket can breathe. */}
       <div className="overflow-x-auto pb-6 px-4" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
         <div className="flex items-center justify-center gap-1.5 sm:gap-2 min-w-max mx-auto">
