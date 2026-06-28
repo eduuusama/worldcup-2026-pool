@@ -96,7 +96,7 @@ function parseSide(competitor: {
 }
 
 async function fetchDate(date: string) {
-  const res = await fetch(`${ESPN}?dates=${date}`, { next: { revalidate: 300 } });
+  const res = await fetch(`${ESPN}?dates=${date}`, { cache: "no-store" });
   if (!res.ok) return [];
   const data = await res.json();
   return (data.events ?? []) as Array<Record<string, unknown>>;

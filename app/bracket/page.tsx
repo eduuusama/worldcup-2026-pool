@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { teamInfo } from "@/lib/data";
 import { useLang } from "@/lib/i18n";
+import { useResults } from "@/lib/results-context";
 
 type RoundKey = "R32" | "R16" | "QF" | "SF" | "BRONZE" | "FINAL";
 interface Ref {
@@ -36,15 +37,31 @@ const LINE = "var(--line)";
 
 export default function BracketPage() {
   const { t, lang } = useLang();
+  const { lastUpdate } = useResults();
   const [bracket, setBracket] = useState<Bracket | null>(null);
   const [error, setError] = useState(false);
+  const fetchKeyRef = useRef(0);
 
-  useEffect(() => {
-    fetch("/api/bracket")
+  const fetchBracket = (bust = false) => {
+    setError(false);
+    const url = bust ? `/api/bracket?v=${Date.now()}` : "/api/bracket";
+    fetch(url)
       .then((r) => r.json())
       .then((d) => (d.error ? setError(true) : setBracket(d)))
       .catch(() => setError(true));
-  }, []);
+  };
+
+  // Initial load
+  useEffect(() => { fetchBracket(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Re-fetch when the user clicks "Actualizar"
+  useEffect(() => {
+    if (!lastUpdate?.ts) return;
+    const key = lastUpdate.ts;
+    if (key === fetchKeyRef.current) return;
+    fetchKeyRef.current = key;
+    fetchBracket(true);
+  }, [lastUpdate?.ts]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) return <div className="card p-8 text-center text-[var(--muted)] text-sm">⚠️</div>;
   if (!bracket) {
@@ -61,19 +78,11 @@ export default function BracketPage() {
 
   const dateLabel = (iso: string) => {
     if (!iso) return "";
-    const d = new Date(iso);
-    const sv = (date: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "America/El_Salvador" }).format(date);
-    const todayKey = sv(new Date());
-    const tomorrow = new Date(`${todayKey}T12:00:00Z`);
-    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-    const isoDay = sv(d);
-    if (isoDay === todayKey) return t("day_today");
-    if (isoDay === sv(tomorrow)) return t("day_tomorrow");
     return new Intl.DateTimeFormat(lang === "es" ? "es-ES" : "en-US", {
       day: "numeric",
       month: "short",
       timeZone: "America/El_Salvador",
-    }).format(d);
+    }).format(new Date(iso));
   };
 
   // Kickoff time in El Salvador (24h in ES, 12h in EN).
