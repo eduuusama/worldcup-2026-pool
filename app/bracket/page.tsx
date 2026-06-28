@@ -158,14 +158,7 @@ export default function BracketPage() {
   const bronze = bracket.rounds.BRONZE?.[0];
 
   return (
-    <div className="space-y-4">
-      <section className="card p-5">
-        <h1 className="text-xl font-bold tracking-tight">{t("bracket_title")}</h1>
-        <p className="text-xs text-[var(--muted)] mt-1">
-          {t("round_r32")} → {t("round_r16")} → {t("round_qf")} → {t("round_sf")} → {t("round_final")}
-        </p>
-      </section>
-
+    <div>
       {/* Break out of the layout's max-w-4xl so the full bracket can breathe. */}
       <div className="overflow-x-auto pb-6 px-4" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
         <div className="flex items-center justify-center gap-1.5 sm:gap-2 min-w-max mx-auto">
