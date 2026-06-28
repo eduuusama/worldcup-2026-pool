@@ -91,7 +91,7 @@ export default function BracketPage() {
     const resolved = !!info;
     return (
       <div
-        className={`flex items-center gap-1.5 px-2 py-1.5 ${
+        className={`flex items-center gap-1.5 px-2 py-1 ${
           side.winner ? "bg-[var(--accent)]/12" : ""
         }`}
       >
@@ -114,7 +114,7 @@ export default function BracketPage() {
 
   function Card({ match }: { match: Match }) {
     return (
-      <div className="w-[116px] sm:w-[132px] shrink-0 rounded-lg border border-[var(--line)] bg-[var(--card)] overflow-hidden">
+      <div className="w-[108px] sm:w-[120px] shrink-0 rounded-lg border border-[var(--line)] bg-[var(--card)] overflow-hidden">
         <SideRow side={match.home} played={match.state !== "pre"} />
         <div className="border-t border-[var(--line)]" />
         <SideRow side={match.away} played={match.state !== "pre"} />
@@ -128,7 +128,7 @@ export default function BracketPage() {
   function Connector({ dir }: { dir: "left" | "right" }) {
     const side = dir === "left" ? "border-r" : "border-l";
     return (
-      <div className="w-3 sm:w-5 self-stretch flex flex-col shrink-0" aria-hidden>
+      <div className="w-2 sm:w-3 self-stretch flex flex-col shrink-0" aria-hidden>
         <div className={`flex-1 ${side} border-b`} style={{ borderColor: LINE }} />
         <div className={`flex-1 ${side} border-t`} style={{ borderColor: LINE }} />
       </div>
@@ -141,7 +141,7 @@ export default function BracketPage() {
     const f2 = match.away.ref ? lookup(match.away.ref) : null;
     if (!f1 && !f2) return <Card match={match} />;
     const feeders = (
-      <div className="flex flex-col justify-around gap-3 sm:gap-4">
+      <div className="flex flex-col justify-around gap-2">
         {f1 ? <Tree match={f1} dir={dir} /> : <span />}
         {f2 ? <Tree match={f2} dir={dir} /> : <span />}
       </div>
@@ -178,8 +178,8 @@ export default function BracketPage() {
   return (
     <div>
       {/* Points-per-phase legend */}
-      <section className="card p-4 mb-4">
-        <h2 className="text-sm font-bold tracking-tight mb-3">{t("bracket_points_title")}</h2>
+      <section className="card p-3 mb-2">
+        <h2 className="text-sm font-bold tracking-tight mb-2">{t("bracket_points_title")}</h2>
         <div className="flex flex-wrap gap-2">
           {PHASES.map((p) => (
             <div
@@ -194,7 +194,7 @@ export default function BracketPage() {
       </section>
 
       {/* Break out of the layout's max-w-4xl so the full bracket can breathe. */}
-      <div className="overflow-x-auto pb-6 px-4" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
+      <div className="overflow-x-auto pb-3 px-4" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
         <div className="flex items-center justify-center gap-1.5 sm:gap-2 min-w-max mx-auto">
           {/* Left half */}
           {sf1 && <Tree match={sf1} dir="left" />}
