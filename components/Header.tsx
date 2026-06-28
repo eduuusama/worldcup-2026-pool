@@ -9,6 +9,7 @@ export function Header() {
   const { t, lang, setLang, toggle } = useLang();
   const pathname = usePathname();
   const isMatches = pathname?.startsWith("/matches");
+  const isBracket = pathname?.startsWith("/bracket");
   const onLeaderboard = pathname === "/" || pathname?.startsWith("/player");
 
   return (
@@ -42,6 +43,14 @@ export function Header() {
             }`}
           >
             {t("nav_matches")}
+          </Link>
+          <Link
+            href="/bracket"
+            className={`px-2 sm:px-3 py-1.5 rounded-lg transition-colors ${
+              isBracket ? "text-white bg-white/5" : "text-[var(--muted)] hover:text-white"
+            }`}
+          >
+            {t("nav_bracket")}
           </Link>
         </nav>
 
