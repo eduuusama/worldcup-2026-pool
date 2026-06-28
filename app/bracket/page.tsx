@@ -95,39 +95,41 @@ export default function BracketPage() {
     }).format(new Date(iso));
   };
 
-  function SideRow({ side, played }: { side: Side; played: boolean }) {
-    const info = side.teamKey ? teamInfo(side.teamKey, lang) : null;
-    const resolved = !!info;
-    return (
-      <div
-        className={`flex items-center gap-1 px-1.5 py-0.5 ${
-          side.winner ? "bg-[var(--accent)]/12" : ""
-        }`}
-      >
-        <span className="text-[11px] leading-none w-3.5 text-center shrink-0">{resolved ? info!.flag : "·"}</span>
-        <span
-          className={`text-[9px] font-semibold truncate flex-1 ${
-            resolved ? (side.winner ? "text-white" : "text-[var(--fg)]") : "text-[var(--muted)]"
-          }`}
-        >
-          {resolved ? side.abbr ?? info!.name : t("tbd")}
-        </span>
-        {played && side.score != null && (
-          <span className={`text-[9px] tnum shrink-0 ${side.winner ? "text-[var(--accent)] font-bold" : "text-[var(--muted)]"}`}>
-            {side.score}
-          </span>
-        )}
-      </div>
-    );
-  }
+  function Card({ match, highlight = false }: { match: Match; highlight?: boolean }) {
+    const played = match.state !== "pre";
 
-  function Card({ match }: { match: Match }) {
+    function Slot({ side }: { side: Side }) {
+      const info = side.teamKey ? teamInfo(side.teamKey, lang) : null;
+      return (
+        <div className="flex flex-col items-center gap-[3px] w-9">
+          <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none shrink-0 ${
+            !info ? "border border-white/15 bg-white/5" : ""
+          }`}>
+            {info?.flag ?? <span className="text-white/20 text-[8px]">?</span>}
+          </div>
+          <span className={`text-[8px] font-bold leading-none tracking-wide ${
+            side.winner ? "text-[var(--accent)]" : info ? "text-white/80" : "text-white/25"
+          }`}>
+            {info ? (side.abbr ?? info.name.slice(0, 3).toUpperCase()) : "TBD"}
+          </span>
+          {played && side.score != null && (
+            <span className={`text-[11px] font-bold tnum leading-none ${
+              side.winner ? "text-[var(--accent)]" : "text-white/50"
+            }`}>{side.score}</span>
+          )}
+        </div>
+      );
+    }
+
     return (
-      <div className="w-[84px] sm:w-[92px] shrink-0 rounded-md border border-[var(--line)] bg-[var(--card)] overflow-hidden">
-        <SideRow side={match.home} played={match.state !== "pre"} />
-        <div className="border-t border-[var(--line)]" />
-        <SideRow side={match.away} played={match.state !== "pre"} />
-        <div className="text-[7px] uppercase tracking-wide text-[var(--muted)] text-center py-px border-t border-[var(--line)] bg-white/[0.015]">
+      <div className={`w-20 shrink-0 rounded-lg border bg-[var(--card)] px-2 pt-2 pb-1.5 flex flex-col items-center gap-1 ${
+        highlight ? "border-[var(--accent)]/50" : "border-[var(--line)]"
+      }`}>
+        <div className="flex items-start justify-center gap-3">
+          <Slot side={match.home} />
+          <Slot side={match.away} />
+        </div>
+        <div className="text-[6.5px] text-[var(--muted)] text-center tracking-wide leading-tight">
           {dateLabel(match.date)} · {timeLabel(match.date)}
         </div>
       </div>
@@ -150,7 +152,7 @@ export default function BracketPage() {
     const f2 = match.away.ref ? lookup(match.away.ref) : null;
     if (!f1 && !f2) return <Card match={match} />;
     const feeders = (
-      <div className="flex flex-col justify-around gap-1">
+      <div className="flex flex-col justify-around gap-2">
         {f1 ? <Tree match={f1} dir={dir} /> : <span />}
         {f2 ? <Tree match={f2} dir={dir} /> : <span />}
       </div>
@@ -208,22 +210,27 @@ export default function BracketPage() {
           {/* Left half */}
           {sf1 && <Tree match={sf1} dir="left" />}
 
-          {/* Center: connector to final, champion, final, bronze */}
+          {/* Center: trophy + final + bronze */}
           <Connector dir="left" />
-          <div className="flex flex-col items-center gap-1 px-1">
-            <div className="text-lg" aria-hidden>🏆</div>
-            <div className="text-[8px] uppercase tracking-wider text-[var(--muted)]">{t("bracket_champion")}</div>
+          <div className="flex flex-col items-center gap-1.5 px-1">
+            <div className="text-2xl leading-none" aria-hidden>🏆</div>
+            <div className="text-[7px] uppercase tracking-widest text-[var(--muted)] font-semibold">
+              {t("bracket_champion")}
+            </div>
             {final && (
-              <div className="ring-1 ring-[var(--accent)]/40 rounded-lg">
-                <Card match={final} />
+              <div className="flex flex-col items-center gap-0.5">
+                <Card match={final} highlight />
+                <span className="text-[6.5px] font-bold uppercase tracking-wider text-[var(--accent)] bg-[var(--accent)]/15 px-2 py-px rounded-full">
+                  {t("round_final")}
+                </span>
               </div>
             )}
             {bronze && (
-              <div className="mt-1 opacity-90">
-                <div className="text-[7px] uppercase tracking-wider text-[var(--muted)] text-center mb-0.5">
-                  🥉 {t("round_bronze")}
-                </div>
+              <div className="flex flex-col items-center gap-0.5 mt-0.5">
                 <Card match={bronze} />
+                <span className="text-[6.5px] font-bold uppercase tracking-wider text-sky-400 bg-sky-400/15 px-2 py-px rounded-full">
+                  {t("round_bronze")}
+                </span>
               </div>
             )}
           </div>
