@@ -6,32 +6,31 @@ import { useLang } from "@/lib/i18n";
 import { useResults } from "@/lib/results-context";
 
 type RoundKey = "R32" | "R16" | "QF" | "SF" | "BRONZE" | "FINAL";
-interface Ref {
-  round: RoundKey;
-  num: number;
-  kind: "W" | "L";
-}
 interface Side {
   teamKey: string | null;
-  abbr: string | null;
   score: number | null;
   winner: boolean;
-  ref: Ref | null;
 }
 interface Match {
-  id: string;
+  id: number;
   round: RoundKey;
-  num: number;
   date: string;
-  venue: string | null;
   state: "pre" | "in" | "post";
   home: Side;
   away: Side;
 }
 interface Bracket {
-  rounds: Record<RoundKey, Match[]>;
+  matches: Record<string, Match>;
   updatedAt: string;
 }
+
+// Fixed FIFA topology — winners propagate up. Must mirror lib/bracket.ts.
+const FEEDERS: Record<number, [number, number]> = {
+  89: [74, 77], 90: [73, 75], 91: [76, 78], 92: [79, 80],
+  93: [83, 84], 94: [81, 82], 95: [86, 88], 96: [85, 87],
+  97: [89, 90], 98: [93, 94], 99: [91, 92], 100: [95, 96],
+  101: [97, 98], 102: [99, 100], 103: [101, 102],
+};
 
 const LINE = "var(--line)";
 
@@ -47,7 +46,7 @@ export default function BracketPage() {
     const url = bust ? `/api/bracket?v=${Date.now()}` : "/api/bracket";
     fetch(url)
       .then((r) => r.json())
-      .then((d) => (d.error ? setError(true) : setBracket(d)))
+      .then((d) => (d.error || !d.matches ? setError(true) : setBracket(d)))
       .catch(() => setError(true));
   };
 
@@ -73,8 +72,7 @@ export default function BracketPage() {
     );
   }
 
-  const lookup = (r: Ref): Match | null =>
-    bracket.rounds[r.round]?.find((m) => m.num === r.num) ?? null;
+  const get = (id: number): Match | undefined => bracket.matches[String(id)];
 
   const dateLabel = (iso: string) => {
     if (!iso) return "";
@@ -110,7 +108,7 @@ export default function BracketPage() {
           <span className={`text-[8px] font-bold leading-none tracking-wide ${
             side.winner ? "text-[var(--accent)]" : info ? "text-white/80" : "text-white/25"
           }`}>
-            {info ? (side.abbr ?? info.name.slice(0, 3).toUpperCase()) : "TBD"}
+            {info ? info.name.slice(0, 3).toUpperCase() : "TBD"}
           </span>
           {played && side.score != null && (
             <span className={`text-[11px] font-bold tnum leading-none ${
@@ -147,20 +145,23 @@ export default function BracketPage() {
   }
 
   // Recursive: render a match and everything that feeds it, fanning toward `dir`.
-  function Tree({ match, dir }: { match: Match; dir: "left" | "right" }): React.ReactElement {
-    const f1 = match.home.ref ? lookup(match.home.ref) : null;
-    const f2 = match.away.ref ? lookup(match.away.ref) : null;
-    if (!f1 && !f2) return <Card match={match} />;
-    const feeders = (
+  function Tree({ id, dir }: { id: number; dir: "left" | "right" }): React.ReactElement {
+    const match = get(id);
+    if (!match) return <span />;
+    const feeders = FEEDERS[id];
+    if (!feeders) return <Card match={match} />; // R32 leaf
+
+    const [f1, f2] = feeders;
+    const feedersEl = (
       <div className="flex flex-col justify-around gap-2">
-        {f1 ? <Tree match={f1} dir={dir} /> : <span />}
-        {f2 ? <Tree match={f2} dir={dir} /> : <span />}
+        <Tree id={f1} dir={dir} />
+        <Tree id={f2} dir={dir} />
       </div>
     );
-    const card = <div className="flex items-center">{<Card match={match} />}</div>;
+    const card = <div className="flex items-center"><Card match={match} /></div>;
     return dir === "left" ? (
       <div className="flex items-stretch">
-        {feeders}
+        {feedersEl}
         <Connector dir="left" />
         {card}
       </div>
@@ -168,15 +169,13 @@ export default function BracketPage() {
       <div className="flex items-stretch">
         {card}
         <Connector dir="right" />
-        {feeders}
+        {feedersEl}
       </div>
     );
   }
 
-  const sf1 = bracket.rounds.SF?.find((m) => m.num === 1);
-  const sf2 = bracket.rounds.SF?.find((m) => m.num === 2);
-  const final = bracket.rounds.FINAL?.[0];
-  const bronze = bracket.rounds.BRONZE?.[0];
+  const final = get(103);
+  const bronze = get(104);
 
   const PHASES: { key: "round_r32" | "round_r16" | "round_qf" | "round_sf" | "round_final"; pts: number }[] = [
     { key: "round_r32", pts: 10 },
@@ -207,8 +206,8 @@ export default function BracketPage() {
       {/* Break out of the layout's max-w-4xl so the full bracket can breathe. */}
       <div className="overflow-x-auto pb-3 px-4" style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}>
         <div className="flex items-center justify-center gap-1 min-w-max mx-auto">
-          {/* Left half */}
-          {sf1 && <Tree match={sf1} dir="left" />}
+          {/* Left half — SF 101 and everything feeding it */}
+          <Tree id={101} dir="left" />
 
           {/* Center: trophy + final + bronze */}
           <Connector dir="left" />
@@ -236,8 +235,8 @@ export default function BracketPage() {
           </div>
           <Connector dir="right" />
 
-          {/* Right half */}
-          {sf2 && <Tree match={sf2} dir="right" />}
+          {/* Right half — SF 102 and everything feeding it */}
+          <Tree id={102} dir="right" />
         </div>
       </div>
     </div>
