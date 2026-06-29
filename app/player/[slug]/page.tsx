@@ -272,9 +272,7 @@ export default function PlayerPage() {
   const koScore = computeKoScore(playerKoPicks, bracket);
   const totalPts = score.points + koScore.total;
 
-  const stats = [
-    { label: t("stat_rank"),       value: rank ? `#${rank}` : "—" },
-    { label: t("stat_points"),     value: totalPts, accent: true },
+  const sideStats = [
     { label: t("stat_correct"),    value: `${score.correct}/${score.played}` },
     { label: t("stat_accuracy"),   value: score.played ? `${Math.round(score.accuracy * 100)}%` : "—" },
     { label: t("stat_pending"),    value: score.pending },
@@ -289,19 +287,35 @@ export default function PlayerPage() {
 
       {/* Hero */}
       <section className="card p-5">
-        <h1 className="text-2xl font-bold tracking-tight">{player.name}</h1>
-        {koScore.total > 0 && (
-          <p className="text-xs text-[var(--muted)] mt-0.5 tnum">
-            {t("ko_group_label")}: {score.points}
-            <span className="text-emerald-400 ml-2">+{koScore.total} {t("ko_pts_label")}</span>
-          </p>
-        )}
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mt-4">
-          {stats.map((s) => (
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          {/* Left: name + rank */}
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">{player.name}</h1>
+            <p className="text-sm text-[var(--muted)] mt-0.5">{rank ? `#${rank}` : "—"} · {t("stat_rank")}</p>
+          </div>
+
+          {/* Right: points breakdown */}
+          <div className="flex flex-col items-end gap-0.5 min-w-[140px]">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[11px] text-[var(--muted)] uppercase tracking-wide">{t("pts_accumulated")}</span>
+              <span className="text-2xl font-bold tnum text-[var(--accent)]">{totalPts}</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] text-[var(--muted)]">{t("pts_knockout")}</span>
+              <span className="text-sm font-semibold tnum text-emerald-400">{koScore.total}</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] text-[var(--muted)]">{t("pts_groups")}</span>
+              <span className="text-sm font-semibold tnum">{score.points}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Secondary stats row */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-[var(--line)]">
+          {sideStats.map((s) => (
             <div key={s.label}>
-              <div className={`text-xl font-bold tnum leading-none ${s.accent ? "text-[var(--accent)]" : ""}`}>
-                {s.value}
-              </div>
+              <div className="text-lg font-bold tnum leading-none">{s.value}</div>
               <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-1">{s.label}</div>
             </div>
           ))}

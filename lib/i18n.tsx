@@ -77,6 +77,9 @@ const MESSAGES: Record<Lang, Dict> = {
     ko_champion_pick: "Mi Campeón",
     ko_correct: "Aciertos",
     ko_no_picks: "Sin pronósticos de eliminatorias aún.",
+    pts_accumulated: "Acumulado",
+    pts_knockout: "Eliminatorias",
+    pts_groups: "Fase de grupos",
   },
   en: {
     subtitle: "RMP / PEYITO",
@@ -149,6 +152,9 @@ const MESSAGES: Record<Lang, Dict> = {
     ko_champion_pick: "My Champion",
     ko_correct: "Correct",
     ko_no_picks: "No knockout picks submitted yet.",
+    pts_accumulated: "Total",
+    pts_knockout: "Knockout",
+    pts_groups: "Group stage",
   },
 };
 
