@@ -62,9 +62,9 @@ export default function LeaderboardPage() {
   }, [augmented, tab]);
 
   const tabs: { id: Tab; label: string }[] = [
-    { id: "total",  label: t("pts_accumulated") },
-    { id: "groups", label: t("pts_groups") },
     { id: "ko",     label: t("pts_knockout") },
+    { id: "groups", label: t("pts_groups") },
+    { id: "total",  label: t("pts_accumulated") },
   ];
 
   return (
