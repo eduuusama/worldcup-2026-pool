@@ -129,3 +129,39 @@ export function computeKoScore(
 
   return { byRound, total };
 }
+
+/** Every team eliminated anywhere in the knockout bracket (lost a decided match). */
+export function eliminatedKoTeams(bracket: BracketLike | null): Set<string> {
+  const out = new Set<string>();
+  if (!bracket?.matches) return out;
+  for (const round of KO_ROUNDS) {
+    for (const team of getEliminated(roundMatches(bracket, round))) out.add(team);
+  }
+  return out;
+}
+
+/**
+ * Maximum KO points a player can still reach.
+ *
+ * - Correct picks are already locked in → counted.
+ * - Pending picks count ONLY if the picked team is still alive (not eliminated
+ *   anywhere in the bracket). Once a team they need is knocked out, those points
+ *   become unreachable, so the ceiling drops.
+ * - Wrong picks contribute nothing.
+ *
+ * Always ≥ computeKoScore(...).total, and shrinks over time as teams are eliminated.
+ */
+export function computeMaxKoScore(
+  playerMatches: Record<string, KoPickMatch>,
+  bracket: BracketLike | null,
+): number {
+  const eliminated = eliminatedKoTeams(bracket);
+  let max = 0;
+  for (const m of Object.values(playerMatches)) {
+    const status = pickStatus(m.pick, m.round, bracket);
+    if (status === "correct") max += m.pts;
+    else if (status === "pending" && !eliminated.has(norm(m.pick))) max += m.pts;
+    // "wrong" — or pending for an already-eliminated team — is unreachable → 0
+  }
+  return max;
+}

@@ -3,8 +3,8 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { matches, players, koPicks } from "@/lib/data";
-import { leaderboard } from "@/lib/scoring";
-import { computeKoScore } from "@/lib/ko-scoring";
+import { leaderboard, POINTS_PER_CORRECT } from "@/lib/scoring";
+import { computeKoScore, computeMaxKoScore } from "@/lib/ko-scoring";
 import { useLang } from "@/lib/i18n";
 import { useResults } from "@/lib/results-context";
 import { useBracket } from "@/lib/bracket-context";
@@ -21,11 +21,23 @@ export default function LeaderboardPage() {
 
   const board = leaderboard(players, matches, results);
 
-  // Augment every entry with KO score
+  // Augment every entry with KO score + the still-reachable ceiling ("max score").
+  // Group ceiling = current group pts + any undecided group picks (worth 10 each).
+  // KO ceiling = locked-in correct pts + pending picks whose team is still alive.
   const augmented = useMemo(() => board.map((p) => {
     const picks = koPicks[p.slug];
     const ko = picks ? computeKoScore(picks, bracket) : null;
-    return { ...p, koPts: ko?.total ?? 0, totalPts: p.points + (ko?.total ?? 0) };
+    const koPts = ko?.total ?? 0;
+    const koMax = picks ? computeMaxKoScore(picks, bracket) : 0;
+    const groupMax = p.points + p.pending * POINTS_PER_CORRECT;
+    return {
+      ...p,
+      koPts,
+      totalPts: p.points + koPts,
+      koMax,
+      groupMax,
+      totalMax: groupMax + koMax,
+    };
   }), [board, bracket]);
 
   // Produce a ranked list for the active tab
@@ -39,12 +51,14 @@ export default function LeaderboardPage() {
 
     const getScore = (p: typeof augmented[0]) =>
       tab === "total" ? p.totalPts : tab === "groups" ? p.points : p.koPts;
+    const getMax = (p: typeof augmented[0]) =>
+      tab === "total" ? p.totalMax : tab === "groups" ? p.groupMax : p.koMax;
 
     // Standard-competition ranking: ties share a rank, next rank skips ahead.
     return sorted.map((p, i) => {
       const score = getScore(p);
       const firstWithScore = sorted.findIndex((q) => getScore(q) === score);
-      return { ...p, rank: firstWithScore + 1, displayPts: score };
+      return { ...p, rank: firstWithScore + 1, displayPts: score, displayMax: getMax(p) };
     });
   }, [augmented, tab]);
 
@@ -118,8 +132,8 @@ export default function LeaderboardPage() {
                   </div>
                 </div>
 
-                {/* Score for active tab */}
-                <div className="text-right shrink-0">
+                {/* Score for active tab + still-reachable ceiling */}
+                <div className="text-right shrink-0 min-w-[56px]">
                   <div className={`text-2xl font-bold tnum leading-none ${
                     tab === "ko" ? "text-emerald-400" : "text-[var(--accent)]"
                   }`}>
@@ -128,6 +142,14 @@ export default function LeaderboardPage() {
                   <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-0.5">
                     {t("col_points")}
                   </div>
+                  {p.displayMax > p.displayPts && (
+                    <div
+                      className="mt-1 pt-1 border-t border-[var(--line)] text-[10px] tnum text-[var(--muted)] whitespace-nowrap"
+                      title={t("max_score_hint")}
+                    >
+                      {t("max_score")} <span className="font-bold text-white/75">{p.displayMax}</span>
+                    </div>
+                  )}
                 </div>
               </Link>
             );
