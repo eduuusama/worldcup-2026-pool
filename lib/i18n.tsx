@@ -71,6 +71,12 @@ const MESSAGES: Record<Lang, Dict> = {
     of: "de",
     footer: "Gran Quinela Mundialista · actualizado automáticamente desde internet",
     no_pick: "—",
+    ko_section: "Eliminatorias",
+    ko_pts_label: "Elim.",
+    ko_group_label: "Grupos",
+    ko_champion_pick: "Mi Campeón",
+    ko_correct: "Aciertos",
+    ko_no_picks: "Sin pronósticos de eliminatorias aún.",
   },
   en: {
     subtitle: "RMP / PEYITO",
@@ -137,6 +143,12 @@ const MESSAGES: Record<Lang, Dict> = {
     of: "of",
     footer: "Gran Quinela Mundialista · auto-updated from the internet",
     no_pick: "—",
+    ko_section: "Knockout Stage",
+    ko_pts_label: "KO",
+    ko_group_label: "Groups",
+    ko_champion_pick: "My Champion",
+    ko_correct: "Correct",
+    ko_no_picks: "No knockout picks submitted yet.",
   },
 };
 

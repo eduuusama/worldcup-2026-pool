@@ -1,0 +1,9 @@
+{
+  "eduardo-sama": {
+    "R32":   ["Canada","Germany","Netherlands","Brazil","France","Norway","Mexico","England","USA","Belgium","Croatia","Spain","Switzerland","Argentina","Colombia","Egypt"],
+    "R16":   ["France","Netherlands","Brazil","England","Spain","USA","Argentina","Colombia"],
+    "QF":    ["France","Spain","England","Argentina"],
+    "SF":    ["France","England"],
+    "FINAL": ["France"]
+  }
+}

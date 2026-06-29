@@ -2,11 +2,14 @@ import matchesJson from "@/data/matches.json";
 import predictionsJson from "@/data/predictions.json";
 import resultsJson from "@/data/results.json";
 import teamsJson from "@/data/teams.json";
+import koPicksJson from "@/data/ko-picks.json";
 import type { Lang, Match, Player, Results, TeamInfo } from "./types";
+import type { KoPicks } from "./ko-scoring";
 
 export const matches = matchesJson as Match[];
 export const players = predictionsJson as Player[];
 export const results = resultsJson as Results;
+export const koPicks = koPicksJson as KoPicks;
 const teams = teamsJson as Record<string, TeamInfo>;
 
 /** Ordered list of the 12 group letters present in the data. */

@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
 import { ResultsProvider } from "@/lib/results-context";
+import { BracketProvider } from "@/lib/bracket-context";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { UpdateToast } from "@/components/UpdateToast";
@@ -27,10 +28,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
           <ResultsProvider>
-            <Header />
-            <UpdateToast />
-            <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6">{children}</main>
-            <Footer />
+            <BracketProvider>
+              <Header />
+              <UpdateToast />
+              <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6">{children}</main>
+              <Footer />
+            </BracketProvider>
           </ResultsProvider>
         </LanguageProvider>
       </body>

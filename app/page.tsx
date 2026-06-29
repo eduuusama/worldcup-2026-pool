@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { matches, players, decidedCount, lastUpdated } from "@/lib/data";
+import { matches, players, decidedCount, lastUpdated, koPicks } from "@/lib/data";
 import { leaderboard } from "@/lib/scoring";
+import { computeKoScore } from "@/lib/ko-scoring";
 import { useLang } from "@/lib/i18n";
 import { useResults } from "@/lib/results-context";
+import { useBracket } from "@/lib/bracket-context";
 
 const MEDAL = ["🥇", "🥈", "🥉"];
 
@@ -16,14 +18,36 @@ function fmtDate(iso: string | null, lang: string): string | null {
   });
 }
 
+const hasAnyKoPicks = Object.keys(koPicks).length > 0;
+
 export default function LeaderboardPage() {
   const { t, lang } = useLang();
   const { results } = useResults();
+  const { bracket } = useBracket();
+
   const board = leaderboard(players, matches, results);
   const decided = decidedCount(results);
   const total = matches.length;
   const updated = fmtDate(lastUpdated(results), lang);
   const pct = total ? Math.round((decided / total) * 100) : 0;
+
+  // Augment each board entry with KO points
+  const augmented = board.map((p) => {
+    const picks = koPicks[p.slug];
+    const ko = picks ? computeKoScore(picks, bracket) : null;
+    return { ...p, koPts: ko?.total ?? 0, totalPts: p.points + (ko?.total ?? 0) };
+  });
+
+  // Re-sort by total (group + KO) desc, then name
+  augmented.sort((a, b) => b.totalPts - a.totalPts || a.name.localeCompare(b.name));
+
+  // Assign competition ranks on totalPts
+  let rank = 0;
+  let prevTotal = Number.NaN;
+  const ranked = augmented.map((p, i) => {
+    if (p.totalPts !== prevTotal) { rank = i + 1; prevTotal = p.totalPts; }
+    return { ...p, rank };
+  });
 
   return (
     <div className="space-y-5">
@@ -44,11 +68,11 @@ export default function LeaderboardPage() {
       </section>
 
       {/* Ranking */}
-      {board.length === 0 ? (
+      {ranked.length === 0 ? (
         <div className="card p-8 text-center text-[var(--muted)] text-sm">{t("empty_players")}</div>
       ) : (
         <section className="space-y-2">
-          {board.map((p) => {
+          {ranked.map((p) => {
             const medal = p.rank <= 3 ? MEDAL[p.rank - 1] : null;
             return (
               <Link
@@ -70,10 +94,21 @@ export default function LeaderboardPage() {
                     {p.correct}/{p.played} {t("col_correct").toLowerCase()}
                     {p.played > 0 && <> · {Math.round(p.accuracy * 100)}%</>}
                   </div>
+                  {/* KO breakdown row */}
+                  {hasAnyKoPicks && (
+                    <div className="text-[10px] text-[var(--muted)] tnum mt-0.5">
+                      <span>{t("ko_group_label")}: {p.points}</span>
+                      {p.koPts > 0 && (
+                        <span className="ml-2 text-[var(--accent)]">+{p.koPts} {t("ko_pts_label")}</span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="text-right shrink-0">
-                  <div className="text-2xl font-bold tnum leading-none text-[var(--accent)]">{p.points}</div>
+                  <div className="text-2xl font-bold tnum leading-none text-[var(--accent)]">
+                    {p.totalPts}
+                  </div>
                   <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-0.5">
                     {t("col_points")}
                   </div>
