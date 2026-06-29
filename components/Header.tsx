@@ -27,10 +27,11 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="ml-auto flex items-center gap-0.5 sm:gap-1 text-sm shrink-0">
+        {/* Desktop inline nav — on mobile this lives in the bottom tab bar */}
+        <nav className="ml-auto hidden sm:flex items-center gap-1 text-sm shrink-0">
           <Link
             href="/"
-            className={`px-2 sm:px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-lg transition-colors ${
               onLeaderboard ? "text-white bg-white/5" : "text-[var(--muted)] hover:text-white"
             }`}
           >
@@ -38,7 +39,7 @@ export function Header() {
           </Link>
           <Link
             href="/matches"
-            className={`px-2 sm:px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-lg transition-colors ${
               isMatches ? "text-white bg-white/5" : "text-[var(--muted)] hover:text-white"
             }`}
           >
@@ -46,7 +47,7 @@ export function Header() {
           </Link>
           <Link
             href="/bracket"
-            className={`px-2 sm:px-3 py-1.5 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 rounded-lg transition-colors ${
               isBracket ? "text-white bg-white/5" : "text-[var(--muted)] hover:text-white"
             }`}
           >
@@ -54,7 +55,9 @@ export function Header() {
           </Link>
         </nav>
 
-        <UpdateScoresButton />
+        <div className="ml-auto sm:ml-0">
+          <UpdateScoresButton />
+        </div>
 
         {/* Mobile: single sliding toggle switch (ES <-> EN) */}
         <button

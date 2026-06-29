@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { matches, players, decidedCount, lastUpdated, koPicks } from "@/lib/data";
+import { matches, players, koPicks } from "@/lib/data";
 import { leaderboard } from "@/lib/scoring";
 import { computeKoScore } from "@/lib/ko-scoring";
 import { useLang } from "@/lib/i18n";
@@ -11,27 +11,15 @@ import { useBracket } from "@/lib/bracket-context";
 
 const MEDAL = ["🥇", "🥈", "🥉"];
 
-function fmtDate(iso: string | null, lang: string): string | null {
-  if (!iso) return null;
-  return new Date(iso + "T12:00:00").toLocaleDateString(lang === "es" ? "es-ES" : "en-US", {
-    day: "numeric",
-    month: "short",
-  });
-}
-
 type Tab = "total" | "groups" | "ko";
 
 export default function LeaderboardPage() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const { results } = useResults();
   const { bracket } = useBracket();
   const [tab, setTab] = useState<Tab>("total");
 
   const board = leaderboard(players, matches, results);
-  const decided = decidedCount(results);
-  const total = matches.length;
-  const updated = fmtDate(lastUpdated(results), lang);
-  const pct = total ? Math.round((decided / total) * 100) : 0;
 
   // Augment every entry with KO score
   const augmented = useMemo(() => board.map((p) => {
@@ -52,12 +40,11 @@ export default function LeaderboardPage() {
     const getScore = (p: typeof augmented[0]) =>
       tab === "total" ? p.totalPts : tab === "groups" ? p.points : p.koPts;
 
-    let rank = 0;
-    let prevScore = Number.NaN;
+    // Standard-competition ranking: ties share a rank, next rank skips ahead.
     return sorted.map((p, i) => {
       const score = getScore(p);
-      if (score !== prevScore) { rank = i + 1; prevScore = score; }
-      return { ...p, rank, displayPts: score };
+      const firstWithScore = sorted.findIndex((q) => getScore(q) === score);
+      return { ...p, rank: firstWithScore + 1, displayPts: score };
     });
   }, [augmented, tab]);
 
@@ -75,7 +62,7 @@ export default function LeaderboardPage() {
           <button
             key={id}
             onClick={() => setTab(id)}
-            className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-colors ${
+            className={`flex-1 py-2 px-1 sm:px-3 rounded-lg text-xs sm:text-sm font-semibold leading-tight text-center transition-colors ${
               tab === id
                 ? "bg-[var(--accent)] text-white"
                 : "text-[var(--muted)] hover:text-white"

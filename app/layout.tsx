@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/lib/i18n";
 import { ResultsProvider } from "@/lib/results-context";
 import { BracketProvider } from "@/lib/bracket-context";
 import { Header } from "@/components/Header";
+import { BottomNav } from "@/components/BottomNav";
 import { Footer } from "@/components/Footer";
 import { UpdateToast } from "@/components/UpdateToast";
 
@@ -31,8 +32,9 @@ export default function RootLayout({
             <BracketProvider>
               <Header />
               <UpdateToast />
-              <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6">{children}</main>
+              <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 pb-24 sm:pb-6">{children}</main>
               <Footer />
+              <BottomNav />
             </BracketProvider>
           </ResultsProvider>
         </LanguageProvider>
