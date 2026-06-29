@@ -69,12 +69,9 @@ export default function LeaderboardPage() {
 
   return (
     <div className="space-y-5">
-      {/* Header / status */}
-      <section className="card p-5">
-        <h1 className="text-xl font-bold tracking-tight">{t("leaderboard_title")}</h1>
-        <p className="text-xs text-[var(--muted)] mt-1">{t("legend")}</p>
-
-        <div className="mt-4 flex items-center justify-between text-sm">
+      {/* Status bar */}
+      <section className="card px-5 py-3">
+        <div className="flex items-center justify-between text-sm">
           <span className="text-[var(--muted)]">{t("decided", { n: decided, total })}</span>
           <span className="text-[var(--muted)]">
             {updated ? t("updated", { date: updated }) : t("never_updated")}
