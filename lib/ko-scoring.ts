@@ -41,9 +41,16 @@ export interface KoScore {
 }
 
 // Mirrors the shape of /api/bracket response — no server imports needed.
+// The bracket is keyed by FIFA match id; each match carries its round.
 interface Side { teamKey: string | null; winner: boolean }
-interface MatchLike { state: "pre" | "in" | "post"; home: Side; away: Side }
-export interface BracketLike { rounds: Partial<Record<string, MatchLike[]>> }
+interface MatchLike { round: string; state: "pre" | "in" | "post"; home: Side; away: Side }
+export interface BracketLike { matches: Record<string, MatchLike> }
+
+/** All matches in a given round (R32/R16/QF/SF/FINAL). */
+function roundMatches(bracket: BracketLike | null, round: KoRoundKey): MatchLike[] {
+  if (!bracket?.matches) return [];
+  return Object.values(bracket.matches).filter((m) => m.round === round);
+}
 
 function norm(name: string): string {
   return name.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/[^a-z0-9]/g, "");
@@ -76,7 +83,7 @@ function isRoundComplete(matches: MatchLike[]): boolean {
 /** Status of a single knockout pick (checked against round winners). */
 export function pickStatus(pick: string, round: KoRoundKey, bracket: BracketLike | null): PickStatus {
   if (!bracket) return "pending";
-  const matches = (bracket.rounds[round] ?? []) as MatchLike[];
+  const matches = roundMatches(bracket, round);
   const key = norm(pick);
   if (getWinners(matches).has(key)) return "correct";
   if (getEliminated(matches).has(key) || isRoundComplete(matches)) return "wrong";
@@ -102,7 +109,7 @@ export function computeKoScore(
     const picks = byRoundPicks[round] ?? [];
     if (picks.length === 0) continue;
 
-    const matches = bracket ? ((bracket.rounds[round] ?? []) as MatchLike[]) : [];
+    const matches = roundMatches(bracket, round);
     const winners = getWinners(matches);
     const elim = getEliminated(matches);
     const complete = isRoundComplete(matches);

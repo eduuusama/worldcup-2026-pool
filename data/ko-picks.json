@@ -1,35 +1,3506 @@
 {
   "eduardo-sama": {
-    "73":  { "teamA": "South Africa",       "teamB": "Canada",            "pick": "Canada",        "round": "R32",   "pts": 10  },
-    "74":  { "teamA": "Germany",            "teamB": "Paraguay",          "pick": "Germany",       "round": "R32",   "pts": 10  },
-    "75":  { "teamA": "Netherlands",        "teamB": "Morocco",           "pick": "Netherlands",   "round": "R32",   "pts": 10  },
-    "76":  { "teamA": "Brazil",             "teamB": "Japan",             "pick": "Brazil",        "round": "R32",   "pts": 10  },
-    "77":  { "teamA": "France",             "teamB": "Sweden",            "pick": "France",        "round": "R32",   "pts": 10  },
-    "78":  { "teamA": "Ivory Coast",        "teamB": "Norway",            "pick": "Norway",        "round": "R32",   "pts": 10  },
-    "79":  { "teamA": "Mexico",             "teamB": "Ecuador",           "pick": "Mexico",        "round": "R32",   "pts": 10  },
-    "80":  { "teamA": "England",            "teamB": "DR Congo",          "pick": "England",       "round": "R32",   "pts": 10  },
-    "81":  { "teamA": "USA",               "teamB": "Bosnia-Herzegovina", "pick": "USA",           "round": "R32",   "pts": 10  },
-    "82":  { "teamA": "Belgium",            "teamB": "Senegal",           "pick": "Belgium",       "round": "R32",   "pts": 10  },
-    "83":  { "teamA": "Portugal",           "teamB": "Croatia",           "pick": "Croatia",       "round": "R32",   "pts": 10  },
-    "84":  { "teamA": "Spain",              "teamB": "Austria",           "pick": "Spain",         "round": "R32",   "pts": 10  },
-    "85":  { "teamA": "Switzerland",        "teamB": "Algeria",           "pick": "Switzerland",   "round": "R32",   "pts": 10  },
-    "86":  { "teamA": "Argentina",          "teamB": "Cape Verde",        "pick": "Argentina",     "round": "R32",   "pts": 10  },
-    "87":  { "teamA": "Colombia",           "teamB": "Ghana",             "pick": "Colombia",      "round": "R32",   "pts": 10  },
-    "88":  { "teamA": "Australia",          "teamB": "Egypt",             "pick": "Egypt",         "round": "R32",   "pts": 10  },
-    "89":  { "teamA": "Germany",            "teamB": "France",            "pick": "France",        "round": "R16",   "pts": 20  },
-    "90":  { "teamA": "Canada",             "teamB": "Netherlands",       "pick": "Netherlands",   "round": "R16",   "pts": 20  },
-    "91":  { "teamA": "Brazil",             "teamB": "Norway",            "pick": "Brazil",        "round": "R16",   "pts": 20  },
-    "92":  { "teamA": "Mexico",             "teamB": "England",           "pick": "England",       "round": "R16",   "pts": 20  },
-    "93":  { "teamA": "Croatia",            "teamB": "Spain",             "pick": "Spain",         "round": "R16",   "pts": 20  },
-    "94":  { "teamA": "USA",               "teamB": "Belgium",            "pick": "USA",           "round": "R16",   "pts": 20  },
-    "95":  { "teamA": "Argentina",          "teamB": "Egypt",             "pick": "Argentina",     "round": "R16",   "pts": 20  },
-    "96":  { "teamA": "Switzerland",        "teamB": "Colombia",          "pick": "Colombia",      "round": "R16",   "pts": 20  },
-    "97":  { "teamA": "France",             "teamB": "Netherlands",       "pick": "France",        "round": "QF",    "pts": 40  },
-    "98":  { "teamA": "Spain",              "teamB": "USA",               "pick": "Spain",         "round": "QF",    "pts": 40  },
-    "99":  { "teamA": "Brazil",             "teamB": "England",           "pick": "England",       "round": "QF",    "pts": 40  },
-    "100": { "teamA": "Argentina",          "teamB": "Colombia",          "pick": "Argentina",     "round": "QF",    "pts": 40  },
-    "101": { "teamA": "France",             "teamB": "Spain",             "pick": "France",        "round": "SF",    "pts": 80  },
-    "102": { "teamA": "England",            "teamB": "Argentina",         "pick": "England",       "round": "SF",    "pts": 80  },
-    "103": { "teamA": "France",             "teamB": "England",           "pick": "France",        "round": "FINAL", "pts": 160 }
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Belgium",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Belgium",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "France",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Argentina",
+      "pick": "England",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "France",
+      "teamB": "England",
+      "pick": "France",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "ax-ml": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Belgium",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Australia",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Belgium",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Australia",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "carito": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "South Africa",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Australia",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "Germany",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "South Africa",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Australia",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Switzerland",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "Germany",
+      "teamB": "Netherlands",
+      "pick": "Germany",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Switzerland",
+      "pick": "Switzerland",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Germany",
+      "teamB": "Spain",
+      "pick": "Germany",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Switzerland",
+      "pick": "Brazil",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Germany",
+      "teamB": "Brazil",
+      "pick": "Germany",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "eddie-y-liza": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "Germany",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "Mexico",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "Germany",
+      "teamB": "Morocco",
+      "pick": "Germany",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "Mexico",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Germany",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "Argentina",
+      "pick": "Spain",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "eduardo-mp": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "Bosnia-Herzegovina",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Belgium",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "Bosnia-Herzegovina",
+      "teamB": "Belgium",
+      "pick": "Bosnia-Herzegovina",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Netherlands",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Argentina",
+      "pick": "England",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "England",
+      "pick": "Spain",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "enrique": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Belgium",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Croatia",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Belgium",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Croatia",
+      "teamB": "USA",
+      "pick": "USA",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "USA",
+      "pick": "France",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Argentina",
+      "pick": "Brazil",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "France",
+      "teamB": "Brazil",
+      "pick": "France",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "fernando-mp": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Japan",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Belgium",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Algeria",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Japan",
+      "teamB": "Norway",
+      "pick": "Japan",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "Mexico",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Belgium",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Algeria",
+      "teamB": "Colombia",
+      "pick": "Algeria",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Japan",
+      "teamB": "Mexico",
+      "pick": "Mexico",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Algeria",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "France",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Mexico",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "France",
+      "teamB": "Argentina",
+      "pick": "France",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "juan-corredor": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Japan",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Ivory Coast",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Japan",
+      "teamB": "Ivory Coast",
+      "pick": "Japan",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Japan",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "Argentina",
+      "pick": "Spain",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "karla-alonzo": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Australia",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Australia",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Switzerland",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Switzerland",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "France",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "France",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "matthew": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Ivory Coast",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "DR Congo",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Algeria",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Ghana",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "Germany",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Ivory Coast",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "DR Congo",
+      "pick": "Mexico",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Algeria",
+      "teamB": "Ghana",
+      "pick": "Ghana",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "Germany",
+      "teamB": "Morocco",
+      "pick": "Germany",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "Mexico",
+      "pick": "Mexico",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Ghana",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Germany",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Mexico",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "milena": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Japan",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Japan",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Morocco",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Norway",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "Argentina",
+      "pick": "Spain",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "miranda": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Japan",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "Germany",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Japan",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "Germany",
+      "teamB": "Netherlands",
+      "pick": "Germany",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Norway",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Germany",
+      "teamB": "Spain",
+      "pick": "Germany",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Colombia",
+      "pick": "England",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Germany",
+      "teamB": "England",
+      "pick": "Germany",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "peyito": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Ecuador",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "Bosnia-Herzegovina",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Cape Verde",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Ghana",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Ecuador",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "Bosnia-Herzegovina",
+      "teamB": "Senegal",
+      "pick": "Bosnia-Herzegovina",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Cape Verde",
+      "teamB": "Egypt",
+      "pick": "Cape Verde",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Ghana",
+      "pick": "Ghana",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Norway",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Cape Verde",
+      "teamB": "Ghana",
+      "pick": "Ghana",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "France",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Ghana",
+      "pick": "England",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "France",
+      "teamB": "England",
+      "pick": "France",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "raul-mp": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Ecuador",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "Bosnia-Herzegovina",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Belgium",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Croatia",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Australia",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "Germany",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Ecuador",
+      "teamB": "England",
+      "pick": "Ecuador",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Croatia",
+      "teamB": "Spain",
+      "pick": "Croatia",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "Bosnia-Herzegovina",
+      "teamB": "Belgium",
+      "pick": "Bosnia-Herzegovina",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Australia",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "Germany",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Croatia",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "Croatia",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "Ecuador",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Netherlands",
+      "teamB": "Croatia",
+      "pick": "Netherlands",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Colombia",
+      "pick": "Brazil",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Netherlands",
+      "teamB": "Brazil",
+      "pick": "Netherlands",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "ricardo-jr": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "Canada",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Netherlands",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Norway",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Mexico",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "France",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "Canada",
+      "teamB": "Netherlands",
+      "pick": "Netherlands",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Norway",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Mexico",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "USA",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "France",
+      "teamB": "Netherlands",
+      "pick": "France",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "USA",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "Brazil",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "France",
+      "teamB": "Spain",
+      "pick": "France",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "Brazil",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "France",
+      "teamB": "Argentina",
+      "pick": "France",
+      "round": "FINAL",
+      "pts": 160
+    }
+  },
+  "ricardo": {
+    "73": {
+      "teamA": "South Africa",
+      "teamB": "Canada",
+      "pick": "South Africa",
+      "round": "R32",
+      "pts": 10
+    },
+    "74": {
+      "teamA": "Germany",
+      "teamB": "Paraguay",
+      "pick": "Germany",
+      "round": "R32",
+      "pts": 10
+    },
+    "75": {
+      "teamA": "Netherlands",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R32",
+      "pts": 10
+    },
+    "76": {
+      "teamA": "Brazil",
+      "teamB": "Japan",
+      "pick": "Brazil",
+      "round": "R32",
+      "pts": 10
+    },
+    "77": {
+      "teamA": "France",
+      "teamB": "Sweden",
+      "pick": "France",
+      "round": "R32",
+      "pts": 10
+    },
+    "78": {
+      "teamA": "Ivory Coast",
+      "teamB": "Norway",
+      "pick": "Ivory Coast",
+      "round": "R32",
+      "pts": 10
+    },
+    "79": {
+      "teamA": "Mexico",
+      "teamB": "Ecuador",
+      "pick": "Ecuador",
+      "round": "R32",
+      "pts": 10
+    },
+    "80": {
+      "teamA": "England",
+      "teamB": "DR Congo",
+      "pick": "England",
+      "round": "R32",
+      "pts": 10
+    },
+    "81": {
+      "teamA": "USA",
+      "teamB": "Bosnia-Herzegovina",
+      "pick": "USA",
+      "round": "R32",
+      "pts": 10
+    },
+    "82": {
+      "teamA": "Belgium",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R32",
+      "pts": 10
+    },
+    "83": {
+      "teamA": "Portugal",
+      "teamB": "Croatia",
+      "pick": "Portugal",
+      "round": "R32",
+      "pts": 10
+    },
+    "84": {
+      "teamA": "Spain",
+      "teamB": "Austria",
+      "pick": "Spain",
+      "round": "R32",
+      "pts": 10
+    },
+    "85": {
+      "teamA": "Switzerland",
+      "teamB": "Algeria",
+      "pick": "Switzerland",
+      "round": "R32",
+      "pts": 10
+    },
+    "86": {
+      "teamA": "Argentina",
+      "teamB": "Cape Verde",
+      "pick": "Argentina",
+      "round": "R32",
+      "pts": 10
+    },
+    "87": {
+      "teamA": "Colombia",
+      "teamB": "Ghana",
+      "pick": "Colombia",
+      "round": "R32",
+      "pts": 10
+    },
+    "88": {
+      "teamA": "Australia",
+      "teamB": "Egypt",
+      "pick": "Egypt",
+      "round": "R32",
+      "pts": 10
+    },
+    "89": {
+      "teamA": "Germany",
+      "teamB": "France",
+      "pick": "Germany",
+      "round": "R16",
+      "pts": 20
+    },
+    "90": {
+      "teamA": "South Africa",
+      "teamB": "Morocco",
+      "pick": "Morocco",
+      "round": "R16",
+      "pts": 20
+    },
+    "91": {
+      "teamA": "Brazil",
+      "teamB": "Ivory Coast",
+      "pick": "Brazil",
+      "round": "R16",
+      "pts": 20
+    },
+    "92": {
+      "teamA": "Ecuador",
+      "teamB": "England",
+      "pick": "England",
+      "round": "R16",
+      "pts": 20
+    },
+    "93": {
+      "teamA": "Portugal",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "R16",
+      "pts": 20
+    },
+    "94": {
+      "teamA": "USA",
+      "teamB": "Senegal",
+      "pick": "Senegal",
+      "round": "R16",
+      "pts": 20
+    },
+    "95": {
+      "teamA": "Argentina",
+      "teamB": "Egypt",
+      "pick": "Argentina",
+      "round": "R16",
+      "pts": 20
+    },
+    "96": {
+      "teamA": "Switzerland",
+      "teamB": "Colombia",
+      "pick": "Colombia",
+      "round": "R16",
+      "pts": 20
+    },
+    "97": {
+      "teamA": "Germany",
+      "teamB": "Morocco",
+      "pick": "Germany",
+      "round": "QF",
+      "pts": 40
+    },
+    "98": {
+      "teamA": "Spain",
+      "teamB": "Senegal",
+      "pick": "Spain",
+      "round": "QF",
+      "pts": 40
+    },
+    "99": {
+      "teamA": "Brazil",
+      "teamB": "England",
+      "pick": "England",
+      "round": "QF",
+      "pts": 40
+    },
+    "100": {
+      "teamA": "Argentina",
+      "teamB": "Colombia",
+      "pick": "Argentina",
+      "round": "QF",
+      "pts": 40
+    },
+    "101": {
+      "teamA": "Germany",
+      "teamB": "Spain",
+      "pick": "Spain",
+      "round": "SF",
+      "pts": 80
+    },
+    "102": {
+      "teamA": "England",
+      "teamB": "Argentina",
+      "pick": "Argentina",
+      "round": "SF",
+      "pts": 80
+    },
+    "103": {
+      "teamA": "Spain",
+      "teamB": "Argentina",
+      "pick": "Spain",
+      "round": "FINAL",
+      "pts": 160
+    }
   }
 }
