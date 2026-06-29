@@ -314,16 +314,6 @@ export default function PlayerPage() {
             </div>
           </div>
         </div>
-
-        {/* Secondary stats row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-[var(--line)]">
-          {sideStats.map((s) => (
-            <div key={s.label}>
-              <div className="text-lg font-bold tnum leading-none">{s.value}</div>
-              <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-1">{s.label}</div>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Knockout bracket tree */}
@@ -339,6 +329,16 @@ export default function PlayerPage() {
           {t("ko_no_picks")}
         </section>
       )}
+
+      {/* Group-stage stats — sit right above the group picks */}
+      <section className="card p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {sideStats.map((s) => (
+          <div key={s.label}>
+            <div className="text-lg font-bold tnum leading-none">{s.value}</div>
+            <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-1">{s.label}</div>
+          </div>
+        ))}
+      </section>
 
       {/* Picks by group */}
       {groups.map((g) => {
