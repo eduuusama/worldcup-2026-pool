@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { teamInfo } from "@/lib/data";
 import { useLang } from "@/lib/i18n";
 import { useResults } from "@/lib/results-context";
@@ -120,9 +121,12 @@ export default function BracketPage() {
     }
 
     return (
-      <div className={`w-20 shrink-0 rounded-lg border bg-[var(--card)] px-2 pt-2 pb-1.5 flex flex-col items-center gap-1 ${
-        highlight ? "border-[var(--accent)]/50" : "border-[var(--line)]"
-      }`}>
+      <Link
+        href={`/ko/${match.id}`}
+        className={`group w-20 shrink-0 rounded-lg border bg-[var(--card)] px-2 pt-2 pb-1.5 flex flex-col items-center gap-1 transition-colors hover:bg-[var(--card-hover)] ${
+          highlight ? "border-[var(--accent)]/50 hover:border-[var(--accent)]" : "border-[var(--line)] hover:border-[var(--accent)]/60"
+        }`}
+      >
         <div className="flex items-start justify-center gap-3">
           <Slot side={match.home} />
           <Slot side={match.away} />
@@ -130,7 +134,7 @@ export default function BracketPage() {
         <div className="text-[6.5px] text-[var(--muted)] text-center tracking-wide leading-tight">
           {dateLabel(match.date)} · {timeLabel(match.date)}
         </div>
-      </div>
+      </Link>
     );
   }
 

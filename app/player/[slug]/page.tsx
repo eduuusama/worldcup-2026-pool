@@ -40,11 +40,13 @@ const LINE = "var(--line)";
 
 function KoCard({
   match,
+  matchId,
   status,
   lang,
   highlight = false,
 }: {
   match: KoPickMatch;
+  matchId: number;
   status: PickStatus;
   lang: "es" | "en";
   highlight?: boolean;
@@ -93,15 +95,16 @@ function KoCard({
     );
 
   return (
-    <div
-      className={`w-20 shrink-0 rounded-lg border bg-[var(--card)] px-2 pt-2 pb-1.5 flex flex-col items-center gap-1 ${borderClass}`}
+    <Link
+      href={`/ko/${matchId}`}
+      className={`w-20 shrink-0 rounded-lg border bg-[var(--card)] px-2 pt-2 pb-1.5 flex flex-col items-center gap-1 transition-colors hover:bg-[var(--card-hover)] ${borderClass}`}
     >
       <div className="flex items-start justify-center gap-3">
         <Slot teamKey={match.teamA} />
         <Slot teamKey={match.teamB} />
       </div>
       <div className="text-center leading-none">{badge}</div>
-    </div>
+    </Link>
   );
 }
 
@@ -140,7 +143,7 @@ function KoTree({
   const status = pickStatus(match.pick, match.round, bracket);
   const card = (
     <div className="flex items-center">
-      <KoCard match={match} status={status} lang={lang} highlight={highlight} />
+      <KoCard match={match} matchId={matchId} status={status} lang={lang} highlight={highlight} />
     </div>
   );
 
@@ -217,6 +220,7 @@ function KoBracket({
               <div className="flex flex-col items-center gap-0.5">
                 <KoCard
                   match={finalMatch}
+                  matchId={103}
                   status={pickStatus(finalMatch.pick, "FINAL", bracket)}
                   lang={lang}
                   highlight
