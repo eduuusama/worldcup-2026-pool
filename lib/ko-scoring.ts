@@ -1,6 +1,6 @@
 /**
  * Scoring for the knockout-stage bracket pool.
- * Each player submits one pick per round per match (which team advances).
+ * Each player submits one pick per match (which team wins).
  * Points scale: R32=10, R16=20, QF=40, SF=80, FINAL=160.
  */
 
@@ -16,14 +16,22 @@ export const KO_PTS: Record<KoRoundKey, number> = {
 
 export const KO_ROUNDS: KoRoundKey[] = ["R32", "R16", "QF", "SF", "FINAL"];
 
-export type KoPicks = Record<string, Partial<Record<KoRoundKey, string[]>>>;
+export interface KoPickMatch {
+  teamA: string;  // teams.json key (left/home team)
+  teamB: string;  // teams.json key (right/away team)
+  pick: string;   // teams.json key of picked winner
+  round: KoRoundKey;
+  pts: number;
+}
+
+export type KoPicks = Record<string, Record<string, KoPickMatch>>;
 
 export type PickStatus = "correct" | "wrong" | "pending";
 
 export interface RoundSummary {
   correct: number;
-  resolved: number; // picks whose outcome is known (correct + wrong)
-  pending: number;  // picks whose match hasn't been played yet
+  resolved: number; // correct + wrong (outcome known)
+  pending: number;
   pts: number;
 }
 
@@ -65,30 +73,35 @@ function isRoundComplete(matches: MatchLike[]): boolean {
   return matches.length > 0 && matches.every((m) => m.state === "post");
 }
 
-/** Status of a single knockout pick. */
+/** Status of a single knockout pick (checked against round winners). */
 export function pickStatus(pick: string, round: KoRoundKey, bracket: BracketLike | null): PickStatus {
   if (!bracket) return "pending";
   const matches = (bracket.rounds[round] ?? []) as MatchLike[];
   const key = norm(pick);
-  const winners = getWinners(matches);
-  if (winners.has(key)) return "correct";
-  const elim = getEliminated(matches);
-  // Wrong if: (a) team played this round and lost, or (b) this round is fully done (team never appeared)
-  if (elim.has(key) || isRoundComplete(matches)) return "wrong";
+  if (getWinners(matches).has(key)) return "correct";
+  if (getEliminated(matches).has(key) || isRoundComplete(matches)) return "wrong";
   return "pending";
 }
 
-/** Aggregate KO score for one player. */
+/** Aggregate KO score for one player from per-match picks. */
 export function computeKoScore(
-  picks: Partial<Record<KoRoundKey, string[]>>,
+  playerMatches: Record<string, KoPickMatch>,
   bracket: BracketLike | null,
 ): KoScore {
+  // Group picks by round
+  const byRoundPicks: Partial<Record<KoRoundKey, string[]>> = {};
+  for (const m of Object.values(playerMatches)) {
+    if (!byRoundPicks[m.round]) byRoundPicks[m.round] = [];
+    byRoundPicks[m.round]!.push(m.pick);
+  }
+
   let total = 0;
   const byRound: Partial<Record<KoRoundKey, RoundSummary>> = {};
 
   for (const round of KO_ROUNDS) {
-    const roundPicks = picks[round] ?? [];
-    if (roundPicks.length === 0) continue;
+    const picks = byRoundPicks[round] ?? [];
+    if (picks.length === 0) continue;
+
     const matches = bracket ? ((bracket.rounds[round] ?? []) as MatchLike[]) : [];
     const winners = getWinners(matches);
     const elim = getEliminated(matches);
@@ -96,15 +109,12 @@ export function computeKoScore(
 
     let correct = 0;
     let pending = 0;
-    for (const pick of roundPicks) {
+    for (const pick of picks) {
       const key = norm(pick);
-      if (winners.has(key)) {
-        correct++;
-      } else if (!elim.has(key) && !complete) {
-        pending++;
-      }
+      if (winners.has(key)) correct++;
+      else if (!elim.has(key) && !complete) pending++;
     }
-    const resolved = roundPicks.length - pending;
+    const resolved = picks.length - pending;
     const pts = correct * KO_PTS[round];
     byRound[round] = { correct, resolved, pending, pts };
     total += pts;

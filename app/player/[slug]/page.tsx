@@ -4,21 +4,242 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getPlayer, matches, matchesOf, players, groups, koPicks, teamInfo } from "@/lib/data";
 import { groupBreakdown, leaderboard, scorePlayer } from "@/lib/scoring";
-import { KO_PTS, KO_ROUNDS, computeKoScore, pickStatus } from "@/lib/ko-scoring";
-import type { KoRoundKey } from "@/lib/ko-scoring";
+import { computeKoScore, pickStatus } from "@/lib/ko-scoring";
+import type { KoPickMatch, KoRoundKey, PickStatus, BracketLike } from "@/lib/ko-scoring";
 import { useLang } from "@/lib/i18n";
 import { useResults } from "@/lib/results-context";
 import { useBracket } from "@/lib/bracket-context";
 import { Badge, TeamLabel } from "@/components/TeamLabel";
 import type { Match } from "@/lib/types";
 
-const ROUND_LABEL: Record<KoRoundKey, string> = {
-  R32: "round_r32",
-  R16: "round_r16",
-  QF:  "round_qf",
-  SF:  "round_sf",
-  FINAL: "round_final",
+// ─── Bracket topology ────────────────────────────────────────────────────────
+// Fixed for the FIFA WC 2026 Excel template (match IDs 73-103).
+// Each match ID maps to the two previous-round match IDs that feed it.
+// R32 matches (73-88) have no feeders — they are leaf nodes.
+const FEEDERS: Record<number, [number, number]> = {
+  103: [101, 102],
+  101: [97,  98 ],
+  102: [99,  100],
+  97:  [89,  90 ],
+  98:  [93,  94 ],
+  99:  [91,  92 ],
+  100: [95,  96 ],
+  89:  [74,  77 ],
+  90:  [73,  75 ],
+  93:  [83,  84 ],
+  94:  [81,  82 ],
+  91:  [76,  78 ],
+  92:  [79,  80 ],
+  95:  [86,  88 ],
+  96:  [85,  87 ],
 };
+
+const LINE = "var(--line)";
+
+// ─── Bracket card ─────────────────────────────────────────────────────────────
+
+function KoCard({
+  match,
+  status,
+  lang,
+  highlight = false,
+}: {
+  match: KoPickMatch;
+  status: PickStatus;
+  lang: "es" | "en";
+  highlight?: boolean;
+}) {
+  function Slot({ teamKey }: { teamKey: string }) {
+    const info = teamInfo(teamKey, lang);
+    const isPick = teamKey === match.pick;
+    return (
+      <div className="flex flex-col items-center gap-[3px] w-9">
+        <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none shrink-0">
+          {info.flag}
+        </div>
+        <span
+          className={`text-[8px] font-bold leading-none tracking-wide ${
+            isPick
+              ? status === "correct"
+                ? "text-emerald-400"
+                : status === "wrong"
+                ? "text-rose-400 line-through"
+                : "text-[var(--accent)]"
+              : "text-white/30"
+          }`}
+        >
+          {info.name.slice(0, 3).toUpperCase()}
+        </span>
+      </div>
+    );
+  }
+
+  const borderClass =
+    status === "correct"
+      ? "border-emerald-500/50"
+      : status === "wrong"
+      ? "border-rose-500/25 opacity-55"
+      : highlight
+      ? "border-[var(--accent)]/50"
+      : "border-[var(--line)]";
+
+  const badge =
+    status === "correct" ? (
+      <span className="text-[6.5px] font-bold text-emerald-400">✓ +{match.pts}</span>
+    ) : status === "wrong" ? (
+      <span className="text-[6.5px] text-rose-400/70">✗</span>
+    ) : (
+      <span className="text-[6.5px] text-[var(--accent)]/50">+{match.pts}</span>
+    );
+
+  return (
+    <div
+      className={`w-20 shrink-0 rounded-lg border bg-[var(--card)] px-2 pt-2 pb-1.5 flex flex-col items-center gap-1 ${borderClass}`}
+    >
+      <div className="flex items-start justify-center gap-3">
+        <Slot teamKey={match.teamA} />
+        <Slot teamKey={match.teamB} />
+      </div>
+      <div className="text-center leading-none">{badge}</div>
+    </div>
+  );
+}
+
+// ─── Connector (same as bracket page) ────────────────────────────────────────
+
+function KoConnector({ dir }: { dir: "left" | "right" }) {
+  const side = dir === "left" ? "border-r" : "border-l";
+  return (
+    <div className="w-1.5 sm:w-2 self-stretch flex flex-col shrink-0" aria-hidden>
+      <div className={`flex-1 ${side} border-b`} style={{ borderColor: LINE }} />
+      <div className={`flex-1 ${side} border-t`} style={{ borderColor: LINE }} />
+    </div>
+  );
+}
+
+// ─── Recursive tree ───────────────────────────────────────────────────────────
+
+function KoTree({
+  matchId,
+  picks,
+  bracket,
+  dir,
+  lang,
+  highlight,
+}: {
+  matchId: number;
+  picks: Record<string, KoPickMatch>;
+  bracket: BracketLike | null;
+  dir: "left" | "right";
+  lang: "es" | "en";
+  highlight?: boolean;
+}): React.ReactElement {
+  const match = picks[String(matchId)];
+  if (!match) return <span />;
+
+  const status = pickStatus(match.pick, match.round, bracket);
+  const card = (
+    <div className="flex items-center">
+      <KoCard match={match} status={status} lang={lang} highlight={highlight} />
+    </div>
+  );
+
+  const feeders = FEEDERS[matchId];
+  if (!feeders) return card; // R32 leaf
+
+  const [f1, f2] = feeders;
+  const feedersEl = (
+    <div className="flex flex-col justify-around gap-2">
+      <KoTree matchId={f1} picks={picks} bracket={bracket} dir={dir} lang={lang} />
+      <KoTree matchId={f2} picks={picks} bracket={bracket} dir={dir} lang={lang} />
+    </div>
+  );
+
+  return dir === "left" ? (
+    <div className="flex items-stretch">
+      {feedersEl}
+      <KoConnector dir="left" />
+      {card}
+    </div>
+  ) : (
+    <div className="flex items-stretch">
+      {card}
+      <KoConnector dir="right" />
+      {feedersEl}
+    </div>
+  );
+}
+
+// ─── Full bracket layout ──────────────────────────────────────────────────────
+
+function KoBracket({
+  picks,
+  bracket,
+  lang,
+  totalKoPts,
+}: {
+  picks: Record<string, KoPickMatch>;
+  bracket: BracketLike | null;
+  lang: "es" | "en";
+  totalKoPts: number;
+}) {
+  const finalMatch = picks["103"];
+  const { t } = useLang();
+
+  return (
+    <section className="card overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--line)] bg-white/[0.02]">
+        <h2 className="font-semibold text-sm">{t("ko_section")}</h2>
+        {totalKoPts > 0 && (
+          <span className="text-xs text-emerald-400 font-bold tnum">+{totalKoPts} pts</span>
+        )}
+      </div>
+
+      {/* Break out of max-w-4xl so the full bracket has room */}
+      <div
+        className="overflow-x-auto pb-4 pt-3 px-4"
+        style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}
+      >
+        <div className="flex items-center justify-center gap-1 min-w-max mx-auto">
+          {/* Left half — SF 101 and all its feeders */}
+          <KoTree matchId={101} picks={picks} bracket={bracket} dir="left" lang={lang} />
+
+          {/* Connector into FINAL */}
+          <KoConnector dir="left" />
+
+          {/* Center: trophy + FINAL card */}
+          <div className="flex flex-col items-center gap-1.5 px-1">
+            <div className="text-2xl leading-none" aria-hidden>🏆</div>
+            <div className="text-[7px] uppercase tracking-widest text-[var(--muted)] font-semibold">
+              {t("ko_champion_pick")}
+            </div>
+            {finalMatch && (
+              <div className="flex flex-col items-center gap-0.5">
+                <KoCard
+                  match={finalMatch}
+                  status={pickStatus(finalMatch.pick, "FINAL", bracket)}
+                  lang={lang}
+                  highlight
+                />
+                <span className="text-[6.5px] font-bold uppercase tracking-wider text-[var(--accent)] bg-[var(--accent)]/15 px-2 py-px rounded-full">
+                  {t("round_final")}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Connector from FINAL */}
+          <KoConnector dir="right" />
+
+          {/* Right half — SF 102 and all its feeders */}
+          <KoTree matchId={102} picks={picks} bracket={bracket} dir="right" lang={lang} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PlayerPage() {
   const { t, lang } = useLang();
@@ -47,17 +268,17 @@ export default function PlayerPage() {
     .sort((a, b) => b.correct - a.correct || b.correct / b.played - a.correct / a.played)[0];
 
   const playerKoPicks = koPicks[slug] ?? {};
-  const koScore = computeKoScore(playerKoPicks, bracket);
   const hasKoPicks = Object.keys(playerKoPicks).length > 0;
+  const koScore = computeKoScore(playerKoPicks, bracket);
   const totalPts = score.points + koScore.total;
 
   const stats = [
-    { label: t("stat_rank"),    value: rank ? `#${rank}` : "—" },
-    { label: t("stat_points"),  value: totalPts, accent: true },
-    { label: t("stat_correct"), value: `${score.correct}/${score.played}` },
-    { label: t("stat_accuracy"),value: score.played ? `${Math.round(score.accuracy * 100)}%` : "—" },
-    { label: t("stat_pending"), value: score.pending },
-    { label: t("stat_best_group"), value: best ? `${t("group_label", { g: best.group })}` : "—" },
+    { label: t("stat_rank"),       value: rank ? `#${rank}` : "—" },
+    { label: t("stat_points"),     value: totalPts, accent: true },
+    { label: t("stat_correct"),    value: `${score.correct}/${score.played}` },
+    { label: t("stat_accuracy"),   value: score.played ? `${Math.round(score.accuracy * 100)}%` : "—" },
+    { label: t("stat_pending"),    value: score.pending },
+    { label: t("stat_best_group"), value: best ? t("group_label", { g: best.group }) : "—" },
   ];
 
   return (
@@ -69,11 +290,10 @@ export default function PlayerPage() {
       {/* Hero */}
       <section className="card p-5">
         <h1 className="text-2xl font-bold tracking-tight">{player.name}</h1>
-        {/* Points breakdown sub-line when KO pts exist */}
         {koScore.total > 0 && (
           <p className="text-xs text-[var(--muted)] mt-0.5 tnum">
             {t("ko_group_label")}: {score.points}
-            <span className="text-[var(--accent)] ml-2">+{koScore.total} {t("ko_pts_label")}</span>
+            <span className="text-emerald-400 ml-2">+{koScore.total} {t("ko_pts_label")}</span>
           </p>
         )}
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mt-4">
@@ -88,35 +308,14 @@ export default function PlayerPage() {
         </div>
       </section>
 
-      {/* Knockout picks */}
+      {/* Knockout bracket tree */}
       {hasKoPicks ? (
-        <section className="card overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--line)] bg-white/[0.02]">
-            <h2 className="font-semibold text-sm">{t("ko_section")}</h2>
-            {koScore.total > 0 && (
-              <span className="text-xs text-[var(--accent)] font-bold tnum">+{koScore.total} pts</span>
-            )}
-          </div>
-          <div className="divide-y divide-[var(--line)]">
-            {KO_ROUNDS.map((round) => {
-              const roundPicks = playerKoPicks[round];
-              if (!roundPicks?.length) return null;
-              const summary = koScore.byRound[round];
-              return (
-                <KoRoundSection
-                  key={round}
-                  round={round}
-                  picks={roundPicks}
-                  summary={summary}
-                  bracket={bracket}
-                  lang={lang}
-                  label={t(ROUND_LABEL[round])}
-                  pts={KO_PTS[round]}
-                />
-              );
-            })}
-          </div>
-        </section>
+        <KoBracket
+          picks={playerKoPicks}
+          bracket={bracket}
+          lang={lang as "es" | "en"}
+          totalKoPts={koScore.total}
+        />
       ) : (
         <section className="card p-5 text-center text-sm text-[var(--muted)]">
           {t("ko_no_picks")}
@@ -147,60 +346,7 @@ export default function PlayerPage() {
   );
 }
 
-// ─── KO round section ──────────────────────────────────────────────────────
-
-interface KoRoundSectionProps {
-  round: KoRoundKey;
-  picks: string[];
-  summary: { correct: number; resolved: number; pts: number } | undefined;
-  bracket: import("@/lib/ko-scoring").BracketLike | null;
-  lang: string;
-  label: string;
-  pts: number;
-}
-
-function KoRoundSection({ round, picks, summary, bracket, lang, label, pts }: KoRoundSectionProps) {
-  const correct = summary?.correct ?? 0;
-  const resolved = summary?.resolved ?? 0;
-
-  return (
-    <div>
-      {/* Round header */}
-      <div className="flex items-center justify-between px-4 py-1.5 bg-white/[0.01]">
-        <span className="text-[11px] font-semibold uppercase tracking-widest text-[var(--muted)]">{label}</span>
-        <span className="text-[11px] text-[var(--muted)] tnum">
-          {resolved > 0 ? `${correct}/${resolved} · ${summary?.pts ?? 0}pts` : `${pts}pts c/u`}
-        </span>
-      </div>
-      {/* Team grid */}
-      <div className="flex flex-wrap gap-2 px-4 py-3">
-        {picks.map((pick) => {
-          const status = pickStatus(pick, round, bracket);
-          const info = teamInfo(pick, lang as "es" | "en");
-          return (
-            <div
-              key={pick}
-              className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium ${
-                status === "correct"
-                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
-                  : status === "wrong"
-                  ? "border-rose-500/30 bg-rose-500/8 text-[var(--muted)] line-through opacity-60"
-                  : "border-[var(--line)] bg-white/[0.03]"
-              }`}
-            >
-              <span className="text-base leading-none">{info.flag}</span>
-              <span>{info.name}</span>
-              {status === "correct" && <span className="text-emerald-400 text-[10px]">✓</span>}
-              {status === "wrong" && <span className="text-rose-400 text-[10px]">✗</span>}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ─── Group stage match row (unchanged) ────────────────────────────────────
+// ─── Group stage match row ────────────────────────────────────────────────────
 
 function MatchRow({ match, pick }: { match: Match; pick: "1" | "X" | "2" | null }) {
   const { t } = useLang();
@@ -224,7 +370,6 @@ function MatchRow({ match, pick }: { match: Match; pick: "1" | "X" | "2" | null 
         </span>
         <TeamLabel team={match.teamB} align="left" className="min-w-0" />
       </div>
-
       <div className="flex items-center gap-2 shrink-0">
         <Badge value={pick} />
         {decided ? (
