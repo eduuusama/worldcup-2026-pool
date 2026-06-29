@@ -69,19 +69,6 @@ export default function LeaderboardPage() {
 
   return (
     <div className="space-y-5">
-      {/* Status bar */}
-      <section className="card px-5 py-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-[var(--muted)]">{t("decided", { n: decided, total })}</span>
-          <span className="text-[var(--muted)]">
-            {updated ? t("updated", { date: updated }) : t("never_updated")}
-          </span>
-        </div>
-        <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
-          <div className="h-full rounded-full bg-[var(--accent)] transition-all" style={{ width: `${pct}%` }} />
-        </div>
-      </section>
-
       {/* Tabs */}
       <div className="flex gap-1 p-1 rounded-xl bg-[var(--card)] border border-[var(--line)]">
         {tabs.map(({ id, label }) => (
