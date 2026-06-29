@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { matches, players, decidedCount, lastUpdated, koPicks } from "@/lib/data";
 import { leaderboard } from "@/lib/scoring";
@@ -18,12 +19,13 @@ function fmtDate(iso: string | null, lang: string): string | null {
   });
 }
 
-const hasAnyKoPicks = Object.keys(koPicks).length > 0;
+type Tab = "total" | "groups" | "ko";
 
 export default function LeaderboardPage() {
   const { t, lang } = useLang();
   const { results } = useResults();
   const { bracket } = useBracket();
+  const [tab, setTab] = useState<Tab>("total");
 
   const board = leaderboard(players, matches, results);
   const decided = decidedCount(results);
@@ -31,23 +33,39 @@ export default function LeaderboardPage() {
   const updated = fmtDate(lastUpdated(results), lang);
   const pct = total ? Math.round((decided / total) * 100) : 0;
 
-  // Augment each board entry with KO points
-  const augmented = board.map((p) => {
+  // Augment every entry with KO score
+  const augmented = useMemo(() => board.map((p) => {
     const picks = koPicks[p.slug];
     const ko = picks ? computeKoScore(picks, bracket) : null;
     return { ...p, koPts: ko?.total ?? 0, totalPts: p.points + (ko?.total ?? 0) };
-  });
+  }), [board, bracket]);
 
-  // Re-sort by total (group + KO) desc, then name
-  augmented.sort((a, b) => b.totalPts - a.totalPts || a.name.localeCompare(b.name));
+  // Produce a ranked list for the active tab
+  const ranked = useMemo(() => {
+    const sorter =
+      tab === "total"  ? (a: typeof augmented[0], b: typeof augmented[0]) => b.totalPts - a.totalPts || a.name.localeCompare(b.name) :
+      tab === "groups" ? (a: typeof augmented[0], b: typeof augmented[0]) => b.points   - a.points   || a.name.localeCompare(b.name) :
+                         (a: typeof augmented[0], b: typeof augmented[0]) => b.koPts     - a.koPts    || a.name.localeCompare(b.name);
 
-  // Assign competition ranks on totalPts
-  let rank = 0;
-  let prevTotal = Number.NaN;
-  const ranked = augmented.map((p, i) => {
-    if (p.totalPts !== prevTotal) { rank = i + 1; prevTotal = p.totalPts; }
-    return { ...p, rank };
-  });
+    const sorted = [...augmented].sort(sorter);
+
+    const getScore = (p: typeof augmented[0]) =>
+      tab === "total" ? p.totalPts : tab === "groups" ? p.points : p.koPts;
+
+    let rank = 0;
+    let prevScore = Number.NaN;
+    return sorted.map((p, i) => {
+      const score = getScore(p);
+      if (score !== prevScore) { rank = i + 1; prevScore = score; }
+      return { ...p, rank, displayPts: score };
+    });
+  }, [augmented, tab]);
+
+  const tabs: { id: Tab; label: string }[] = [
+    { id: "total",  label: t("pts_accumulated") },
+    { id: "groups", label: t("pts_groups") },
+    { id: "ko",     label: t("pts_knockout") },
+  ];
 
   return (
     <div className="space-y-5">
@@ -67,6 +85,23 @@ export default function LeaderboardPage() {
         </div>
       </section>
 
+      {/* Tabs */}
+      <div className="flex gap-1 p-1 rounded-xl bg-[var(--card)] border border-[var(--line)]">
+        {tabs.map(({ id, label }) => (
+          <button
+            key={id}
+            onClick={() => setTab(id)}
+            className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-colors ${
+              tab === id
+                ? "bg-[var(--accent)] text-white"
+                : "text-[var(--muted)] hover:text-white"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       {/* Ranking */}
       {ranked.length === 0 ? (
         <div className="card p-8 text-center text-[var(--muted)] text-sm">{t("empty_players")}</div>
@@ -80,6 +115,7 @@ export default function LeaderboardPage() {
                 href={`/player/${p.slug}`}
                 className="card px-4 py-3 flex items-center gap-3 hover:bg-[var(--card-hover)] transition-colors"
               >
+                {/* Rank / medal */}
                 <div className="w-8 text-center shrink-0">
                   {medal ? (
                     <span className="text-xl">{medal}</span>
@@ -88,26 +124,35 @@ export default function LeaderboardPage() {
                   )}
                 </div>
 
+                {/* Name + breakdown */}
                 <div className="min-w-0 flex-1">
                   <div className="font-semibold truncate">{p.name}</div>
                   <div className="text-xs text-[var(--muted)] tnum">
                     {p.correct}/{p.played} {t("col_correct").toLowerCase()}
                     {p.played > 0 && <> · {Math.round(p.accuracy * 100)}%</>}
                   </div>
-                  {/* KO breakdown row */}
-                  {hasAnyKoPicks && (
-                    <div className="text-[10px] text-[var(--muted)] tnum mt-0.5">
-                      <span>{t("ko_group_label")}: {p.points}</span>
-                      {p.koPts > 0 && (
-                        <span className="ml-2 text-[var(--accent)]">+{p.koPts} {t("ko_pts_label")}</span>
-                      )}
-                    </div>
-                  )}
+                  {/* Secondary line — show the other two scores as context */}
+                  <div className="text-[10px] text-[var(--muted)] tnum mt-0.5 flex gap-2">
+                    {tab !== "groups" && (
+                      <span>{t("pts_groups")}: {p.points}</span>
+                    )}
+                    {tab !== "ko" && (
+                      <span className={p.koPts > 0 ? "text-emerald-400/70" : ""}>
+                        {t("pts_knockout")}: {p.koPts}
+                      </span>
+                    )}
+                    {tab !== "total" && (
+                      <span>{t("pts_accumulated")}: {p.totalPts}</span>
+                    )}
+                  </div>
                 </div>
 
+                {/* Score for active tab */}
                 <div className="text-right shrink-0">
-                  <div className="text-2xl font-bold tnum leading-none text-[var(--accent)]">
-                    {p.totalPts}
+                  <div className={`text-2xl font-bold tnum leading-none ${
+                    tab === "ko" ? "text-emerald-400" : "text-[var(--accent)]"
+                  }`}>
+                    {p.displayPts}
                   </div>
                   <div className="text-[10px] uppercase tracking-wider text-[var(--muted)] mt-0.5">
                     {t("col_points")}
