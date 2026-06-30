@@ -130,6 +130,11 @@ export function computeKoScore(
   return { byRound, total };
 }
 
+/** True if `team` (any casing/accents) is in a precomputed eliminated set. */
+export function teamEliminated(eliminated: Set<string>, team: string): boolean {
+  return eliminated.has(norm(team));
+}
+
 /** Every team eliminated anywhere in the knockout bracket (lost a decided match). */
 export function eliminatedKoTeams(bracket: BracketLike | null): Set<string> {
   const out = new Set<string>();

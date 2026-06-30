@@ -4,8 +4,13 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getPlayer, matches, matchesOf, players, groups, koPicks, teamInfo } from "@/lib/data";
 import { groupBreakdown, leaderboard, scorePlayer } from "@/lib/scoring";
-import { computeKoScore, pickStatus } from "@/lib/ko-scoring";
+import { computeKoScore, pickStatus, eliminatedKoTeams, teamEliminated } from "@/lib/ko-scoring";
 import type { KoPickMatch, KoRoundKey, PickStatus, BracketLike } from "@/lib/ko-scoring";
+
+// A pick whose team has been knocked out in an earlier round is "dead": it can no
+// longer score even though its round hasn't been played yet (e.g. predicting an
+// already-eliminated team to win the final).
+type CardStatus = PickStatus | "dead";
 import { useLang } from "@/lib/i18n";
 import { useResults } from "@/lib/results-context";
 import { useBracket } from "@/lib/bracket-context";
@@ -47,7 +52,7 @@ function KoCard({
 }: {
   match: KoPickMatch;
   matchId: number;
-  status: PickStatus;
+  status: CardStatus;
   lang: "es" | "en";
   highlight?: boolean;
 }) {
@@ -56,7 +61,9 @@ function KoCard({
     const isPick = teamKey === match.pick;
     return (
       <div className="flex flex-col items-center gap-[3px] w-9">
-        <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none shrink-0">
+        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs leading-none shrink-0 ${
+          status === "dead" && isPick ? "grayscale opacity-60" : ""
+        }`}>
           {info.flag}
         </div>
         <span
@@ -66,6 +73,8 @@ function KoCard({
                 ? "text-emerald-400"
                 : status === "wrong"
                 ? "text-rose-400 line-through"
+                : status === "dead"
+                ? "text-white/30 line-through"
                 : "text-[var(--accent)]"
               : "text-white/30"
           }`}
@@ -81,6 +90,8 @@ function KoCard({
       ? "border-emerald-500/50"
       : status === "wrong"
       ? "border-rose-500/25 opacity-55"
+      : status === "dead"
+      ? "border-[var(--line)] opacity-45"
       : highlight
       ? "border-[var(--accent)]/50"
       : "border-[var(--line)]";
@@ -90,6 +101,8 @@ function KoCard({
       <span className="text-[6.5px] font-bold text-emerald-400">✓ +{match.pts}</span>
     ) : status === "wrong" ? (
       <span className="text-[6.5px] text-rose-400/70">✗</span>
+    ) : status === "dead" ? (
+      <span className="text-[6.5px] text-white/30">✕ {lang === "es" ? "fuera" : "out"}</span>
     ) : (
       <span className="text-[6.5px] text-[var(--accent)]/50">+{match.pts}</span>
     );
@@ -122,10 +135,22 @@ function KoConnector({ dir }: { dir: "left" | "right" }) {
 
 // ─── Recursive tree ───────────────────────────────────────────────────────────
 
+/** pickStatus, but a pending pick for an eliminated team becomes "dead". */
+function cardStatus(
+  match: KoPickMatch,
+  bracket: BracketLike | null,
+  eliminated: Set<string>,
+): CardStatus {
+  const status = pickStatus(match.pick, match.round, bracket);
+  if (status === "pending" && teamEliminated(eliminated, match.pick)) return "dead";
+  return status;
+}
+
 function KoTree({
   matchId,
   picks,
   bracket,
+  eliminated,
   dir,
   lang,
   highlight,
@@ -133,6 +158,7 @@ function KoTree({
   matchId: number;
   picks: Record<string, KoPickMatch>;
   bracket: BracketLike | null;
+  eliminated: Set<string>;
   dir: "left" | "right";
   lang: "es" | "en";
   highlight?: boolean;
@@ -140,7 +166,7 @@ function KoTree({
   const match = picks[String(matchId)];
   if (!match) return <span />;
 
-  const status = pickStatus(match.pick, match.round, bracket);
+  const status = cardStatus(match, bracket, eliminated);
   const card = (
     <div className="flex items-center">
       <KoCard match={match} matchId={matchId} status={status} lang={lang} highlight={highlight} />
@@ -153,8 +179,8 @@ function KoTree({
   const [f1, f2] = feeders;
   const feedersEl = (
     <div className="flex flex-col justify-around gap-2">
-      <KoTree matchId={f1} picks={picks} bracket={bracket} dir={dir} lang={lang} />
-      <KoTree matchId={f2} picks={picks} bracket={bracket} dir={dir} lang={lang} />
+      <KoTree matchId={f1} picks={picks} bracket={bracket} eliminated={eliminated} dir={dir} lang={lang} />
+      <KoTree matchId={f2} picks={picks} bracket={bracket} eliminated={eliminated} dir={dir} lang={lang} />
     </div>
   );
 
@@ -187,6 +213,7 @@ function KoBracket({
   totalKoPts: number;
 }) {
   const finalMatch = picks["103"];
+  const eliminated = eliminatedKoTeams(bracket);
   const { t } = useLang();
 
   return (
@@ -205,7 +232,7 @@ function KoBracket({
       >
         <div className="flex items-center justify-center gap-1 min-w-max mx-auto">
           {/* Left half — SF 101 and all its feeders */}
-          <KoTree matchId={101} picks={picks} bracket={bracket} dir="left" lang={lang} />
+          <KoTree matchId={101} picks={picks} bracket={bracket} eliminated={eliminated} dir="left" lang={lang} />
 
           {/* Connector into FINAL */}
           <KoConnector dir="left" />
@@ -221,7 +248,7 @@ function KoBracket({
                 <KoCard
                   match={finalMatch}
                   matchId={103}
-                  status={pickStatus(finalMatch.pick, "FINAL", bracket)}
+                  status={cardStatus(finalMatch, bracket, eliminated)}
                   lang={lang}
                   highlight
                 />
@@ -236,7 +263,7 @@ function KoBracket({
           <KoConnector dir="right" />
 
           {/* Right half — SF 102 and all its feeders */}
-          <KoTree matchId={102} picks={picks} bracket={bracket} dir="right" lang={lang} />
+          <KoTree matchId={102} picks={picks} bracket={bracket} eliminated={eliminated} dir="right" lang={lang} />
         </div>
       </div>
     </section>
